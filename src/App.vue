@@ -25,6 +25,9 @@ import { RouterLink, RouterView } from 'vue-router'
         <RouterLink class="nav-link" to="/votarcanciones">Votar
           Canciones</RouterLink>
       </li>
+      <li class="nav-item">
+        <RouterLink class="nav-link" to="/comentariodj">Comentario Dj</RouterLink>
+      </li>
     </ul>
   </header>
 

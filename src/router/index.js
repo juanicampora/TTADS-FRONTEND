@@ -31,6 +31,11 @@ const router = createRouter({
       component: () => import('../views/VotarCancionesView.vue')
     },
     {
+      path: '/comentariodj',
+      name: 'comentariodj',
+      component: () => import('../views/ComentarioDjView.vue')
+    },
+    {
       path: "/:pathMatch(.*)*",
       name: "NotFound",
       component: () => import("../views/NotFoundView.vue"),
