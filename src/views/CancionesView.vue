@@ -2,7 +2,5 @@
 </script>
 
 <template>
-  <div class="card">
-    <div class="card-head">Canciones</div>
-  </div>
+  <h1>Canciones</h1>
 </template>

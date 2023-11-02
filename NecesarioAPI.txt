@@ -1,0 +1,11 @@
+
+YA LISTO PARA PROBAR SI SE IMPLEMENTA EN EL BACK
+
+getDJS -> idDJ,nombre,actual(true/false) 
+
+
+FALTA IMPLEMENTAR SI SE IMPLEMENTA EN EL BACK
+
+getOneDJ (idDJ) -> nombre,instagram,celular
+
+newDJ (nombre,instagram,celular) Y HACER QUE SE ACTUALICE LA LISTA DE DJS EN EL FRONT

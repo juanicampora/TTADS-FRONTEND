@@ -28,8 +28,8 @@ import { RouterLink, RouterView } from 'vue-router'
     </ul>
   </header>
 
-  <container class="container">
+  <div>
     <RouterView />
-  </container>
+  </div>
 </template>
 
