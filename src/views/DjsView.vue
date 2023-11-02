@@ -55,7 +55,7 @@ const nuevoDJ = () => {
               <td class="d-flex justify-content-end">
                 <div class="btn-group">
                   <button class="btn btn-info" @click="hacerActual(1)" disabled>Hacer Actual</button>
-                  <button class="btn btn-warning" @click="activarEditor(1)">Editar</button>
+                  <button class="btn btn-warning" @click="activarEditor('Dj Tao')">Editar</button>
                   <button class="btn btn-primary">Ver Comentarios</button>
                 </div>
               </td>
@@ -66,7 +66,7 @@ const nuevoDJ = () => {
               <td class="d-flex justify-content-end">
                 <div class="btn-group">
                   <button class="btn btn-info" @click="hacerActual(1)">Hacer Actual</button>
-                  <button class="btn btn-warning" @click="activarEditor(2)">Editar</button>
+                  <button class="btn btn-warning" @click="activarEditor('Dj Peligro')">Editar</button>
                   <button class="btn btn-primary">Ver Comentarios</button>
                 </div>
               </td>
@@ -77,7 +77,7 @@ const nuevoDJ = () => {
               <td class="d-flex justify-content-end">
                 <div class="btn-group">
                   <button class="btn btn-info" @click="hacerActual(1)">Hacer Actual</button>
-                  <button class="btn btn-warning" @click="activarEditor(3)">Editar</button>
+                  <button class="btn btn-warning" @click="activarEditor('Fer Palacio')">Editar</button>
                   <button class="btn btn-primary">Ver Comentarios</button>
                 </div>
               </td>

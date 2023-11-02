@@ -20,3 +20,10 @@ updateCanciones (listaCanciones)
 -Hacer el metodo de guardar en el front
 -En el back tiene que agregar a la lista de canciones las que no esten todavia, y agregar todos a la lista de canciones del dj actual
 ----------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+De aca sacamos el datepicker:
+https://vue3datepicker.com/installation/
