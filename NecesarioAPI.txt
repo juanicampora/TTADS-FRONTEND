@@ -19,11 +19,25 @@ updateCanciones (listaCanciones)
 
 -Hacer el metodo de guardar en el front
 -En el back tiene que agregar a la lista de canciones las que no esten todavia, y agregar todos a la lista de canciones del dj actual
+-En el front tiene que mostrar un mensaje de que se guardo correctamente
 ----------------------------------------------------------------------------------------------------------------------------------------
+topCancionesFecha(fecha) -> listaCanciones con: idCancion,nombre,autor,puntaje
 
+-Tiene que venir desde el back ordenada por puntaje y habiendo filtrado por esa fecha
 
+----------------------------------------------------------------------------------------------------------------------------------------
+topCancionesActual() -> listaCanciones con: idCancion,nombre,autor,puntaje
 
+-Tiene que venir desde el back ordenada por puntaje y filtrado por fecha de HOY usando topCancionesFecha(fecha)
+----------------------------------------------------------------------------------------------------------------------------------------
+votarCanciones(listaCancionesVotadas) 
 
+-Manda todos los id de canciones votadas
+-En el back tiene que sumarle 1 a cada cancion votada
+-En el front tiene que mostrar un mensaje de que se voto correctamente
 
 De aca sacamos el datepicker:
 https://vue3datepicker.com/installation/
+
+De aca sacamos los checkbox:
+https://lokesh-coder.github.io/pretty-checkbox/#installation
