@@ -14,7 +14,7 @@ import { RouterLink, RouterView } from 'vue-router'
         <RouterLink class="nav-link" to="/djs">DJs</RouterLink>
       </li>
       <li class="nav-item">
-        <RouterLink class="nav-link" to="/canciones">Canciones
+        <RouterLink class="nav-link" to="/cargacanciones">Carga Canciones
         </RouterLink>
       </li>
       <li class="nav-item">

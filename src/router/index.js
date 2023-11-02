@@ -16,9 +16,9 @@ const router = createRouter({
       component: () => import('../views/DjsView.vue')
     },
     {
-      path: '/canciones',
-      name: 'canciones',
-      component: () => import('../views/CancionesView.vue')
+      path: '/cargacanciones',
+      name: 'cargacanciones',
+      component: () => import('../views/CargaCancionesView.vue')
     },
     {
       path: '/topcanciones',
@@ -31,9 +31,9 @@ const router = createRouter({
       component: () => import('../views/VotarCancionesView.vue')
     },
     {
-    path: "/:pathMatch(.*)*",
-    name: "NotFound",
-    component: () => import("../views/NotFoundView.vue"),
+      path: "/:pathMatch(.*)*",
+      name: "NotFound",
+      component: () => import("../views/NotFoundView.vue"),
     },
   ]
 })

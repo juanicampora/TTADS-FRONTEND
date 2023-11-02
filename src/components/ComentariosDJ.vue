@@ -1,6 +1,6 @@
 <script setup>
 
-defineProps(['djEditar']);
+defineProps(['djComentarios']);
 
 const cerrarEditor = () => {
   emit('cerrarEditor');
