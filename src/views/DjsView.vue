@@ -27,9 +27,10 @@ const nuevoDJ = () => {
     <div>
       <h1 class="text-center display-5 fw-bold text-body-emphasis">DJs</h1>
       <h6 class="text-center">(DJ actual en verde)</h6>
-      <div class="col-lg-6 mx-auto">
-        <div class="d-flex justify-content-end my-3">
-          <button type="button" class="btn btn-success" @click="nuevoDJ">Nuevo DJ</button>
+      <div class="mx-4">
+        <div class="my-3">
+          <button type="button" class="btn btn-success" @click="nuevoDJ" style="width: 300px; font-size: large;">Nuevo
+            DJ</button>
         </div>
         <table class="table">
           <thead>

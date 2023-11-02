@@ -3,9 +3,20 @@ YA LISTO PARA PROBAR SI SE IMPLEMENTA EN EL BACK
 
 getDJS -> idDJ,nombre,actual(true/false) 
 
+-Desde el back tiene que venir el actual PRIMERO
+----------------------------------------------------------------------------------------------------------------------------------------
+
 
 FALTA IMPLEMENTAR SI SE IMPLEMENTA EN EL BACK
 
 getOneDJ (idDJ) -> nombre,instagram,celular
+----------------------------------------------------------------------------------------------------------------------------------------
+newDJ (nombre,instagram,celular) 
 
-newDJ (nombre,instagram,celular) Y HACER QUE SE ACTUALICE LA LISTA DE DJS EN EL FRONT
+-Hacer que se actualice la lista de djs en el front
+----------------------------------------------------------------------------------------------------------------------------------------
+updateCanciones (listaCanciones) 
+
+-Hacer el metodo de guardar en el front
+-En el back tiene que agregar a la lista de canciones las que no esten todavia, y agregar todos a la lista de canciones del dj actual
+----------------------------------------------------------------------------------------------------------------------------------------
