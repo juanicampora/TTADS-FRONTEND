@@ -41,6 +41,9 @@ newComentario(comentarioDj)
 -Manda un string con el comentario
 -En el back tiene que agregar el comentario a la lista de comentarios del dj actual
 -En el front tiene que mostrar un mensaje de que se guardo correctamente
+----------------------------------------------------------------------------------------------------------------------------------------
+
+En todas las canciones tiene que sumar todos los puntajes.
 
 De aca sacamos el datepicker:
 https://vue3datepicker.com/installation/

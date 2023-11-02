@@ -16,9 +16,14 @@ const router = createRouter({
       component: () => import('../views/DjsView.vue')
     },
     {
-      path: '/cargacanciones',
-      name: 'cargacanciones',
-      component: () => import('../views/CargaCancionesView.vue')
+      path: '/canciones',
+      name: 'canciones',
+      component: () => import('../views/CancionesView.vue')
+    },
+    {
+      path: '/cargacancionesdj',
+      name: 'cargacancionesdj',
+      component: () => import('../views/CargaCancionesDjView.vue')
     },
     {
       path: '/topcanciones',

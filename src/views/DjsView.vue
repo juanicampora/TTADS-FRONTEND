@@ -13,15 +13,13 @@ const activarEditor = (djTabla) => {
 
 const nuevoDJ = () => {
   estadoEditor.value = true;
+  djEditar.value = null;
 };
 </script>
 
 <template>
   <div>
     <EditarDJ v-if="estadoEditor" :djEditar="djEditar" @cerrarEditor="estadoEditor = false" />
-  </div>
-  <div>
-
   </div>
   <div class="container py-4 rounded mt-3" style="background-color: darkgray;">
     <div>
