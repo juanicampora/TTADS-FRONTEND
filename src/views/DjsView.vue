@@ -1,11 +1,14 @@
 <script setup>
 import { ref } from 'vue';
 import EditarDJ from '@/components/EditarDJ.vue';
+import ComentariosDJ from '@/components/ComentariosDJ.vue';
 import axios from 'axios';
 
 const djs = ref([]);
 const estadoEditor = ref(false);
 const djEditar = ref(0);
+const estadoComentarios = ref(false);
+const djComentarios = ref(0);
 
 const activarEditor = (djTabla) => {
   estadoEditor.value = false;
@@ -15,6 +18,13 @@ const activarEditor = (djTabla) => {
   }, 1);
 };
 
+const verComentarios = (djTabla) => {
+  estadoComentarios.value = false;
+  setTimeout(() => {
+    djComentarios.value = djTabla;
+    estadoComentarios.value = true;
+  }, 1);
+};
 
 const nuevoDJ = () => {
   estadoEditor.value = false;
@@ -50,6 +60,8 @@ getData();
 <template>
   <div>
     <EditarDJ v-if="estadoEditor" :djEditar="djEditar" @cerrarEditor="estadoEditor = false" @getData="getData" />
+    <ComentariosDJ v-if="estadoComentarios" :djComentarios="djComentarios"
+      @cerrarComentarios="estadoComentarios = false" />
   </div>
   <div class="container py-4 rounded mt-3" style="background-color: darkgray;">
     <div>
