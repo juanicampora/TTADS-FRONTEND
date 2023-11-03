@@ -22,6 +22,7 @@ if (props.djEditar) {
 else {
   metodo = 'post';
   url = 'https://fiestaappapi.onrender.com/api/djs';
+  esActual = false;
 };
 
 const eliminarIngresado = () => {
@@ -75,7 +76,7 @@ const guardarIngresado = () => {
         <input class="form-control mt-3" type="number" placeholder="Celular" v-model="numeroIngresado">
         <div class="mt-3 d-flex justify-content-evenly">
           <button type="button" class="btn btn-secondary" @click="emit('cerrarEditor')">Cancelar</button>
-          <button type="button" class="btn btn-danger" @click='eliminarIngresado'>Eliminar</button>
+          <button v-if="djEditar" type="button" class="btn btn-danger" @click='eliminarIngresado'>Eliminar</button>
           <button type="button" class="btn btn-success" @click='guardarIngresado'>Guardar</button>
         </div>
       </div>

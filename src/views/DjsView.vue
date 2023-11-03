@@ -27,10 +27,7 @@ const nuevoDJ = () => {
 const hacerActual = (djTabla) => {
   axios({
     method: 'put',
-    url: `https://fiestaappapi.onrender.com/api/djs/${djTabla.id}`,
-    data: {
-      "actual": true
-    }
+    url: `https://fiestaappapi.onrender.com/api/djs/actual/${djTabla.id}`
   });
   setTimeout(() => {
     getData();
