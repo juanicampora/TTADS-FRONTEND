@@ -1,19 +1,13 @@
-
-YA LISTO PARA PROBAR SI SE IMPLEMENTA EN EL BACK
-
-getDJS -> idDJ,nombre,actual(true/false) 
+GET ALL djs (https://fiestaappapi.onrender.com/api/djs) 
 
 -Desde el back tiene que venir el actual PRIMERO
 ----------------------------------------------------------------------------------------------------------------------------------------
+PUT djs
 
+El que es para actualizar es: https://fiestaappapi.onrender.com/api/djs/<ACA VA EL ID DJ>
+Necesito uno mas que sea: https://fiestaappapi.onrender.com/api/djs/actual/<ACA VA EL ID DJ>
 
-FALTA IMPLEMENTAR SI SE IMPLEMENTA EN EL BACK
-
-getOneDJ (idDJ) -> nombre,instagram,celular
-----------------------------------------------------------------------------------------------------------------------------------------
-newDJ (nombre,instagram,celular) 
-
--Hacer que se actualice la lista de djs en el front
+-Que lo unico que haga sea poner ese dj como actual en true y a todos los demas en false
 ----------------------------------------------------------------------------------------------------------------------------------------
 updateCanciones (listaCanciones) 
 

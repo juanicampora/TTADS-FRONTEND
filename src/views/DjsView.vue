@@ -1,25 +1,63 @@
 <script setup>
 import { ref } from 'vue';
 import EditarDJ from '@/components/EditarDJ.vue';
+import axios from 'axios';
 
+const djs = ref([]);
 const estadoEditor = ref(false);
 const djEditar = ref(0);
 
 const activarEditor = (djTabla) => {
-  djEditar.value = djTabla;
-  estadoEditor.value = true;
+  estadoEditor.value = false;
+  setTimeout(() => {
+    djEditar.value = djTabla;
+    estadoEditor.value = true;
+  }, 1);
 };
 
 
 const nuevoDJ = () => {
-  estadoEditor.value = true;
-  djEditar.value = null;
+  estadoEditor.value = false;
+  setTimeout(() => {
+    djEditar.value = null;
+    estadoEditor.value = true;
+  }, 1);
 };
+
+const hacerActual = (djTabla) => {
+  axios({
+    method: 'put',
+    url: `https://fiestaappapi.onrender.com/api/djs/${djTabla.id}`,
+    data: {
+      "nombre": djEditar.nombre,
+      "instagram": djEditar.instagram,
+      "tel": djEditar.tel,
+      "actual": true
+    }
+  });
+  setTimeout(() => {
+    getData();
+  }, 1000);
+};
+
+
+const getData = async () => {
+  try {
+    const { data } = await axios.get('https://fiestaappapi.onrender.com/api/djs');
+    djs.value = data.data;
+    console.log(djs.value);
+    console.log("HICE UN GET")
+  } catch (error) {
+    console.log(error)
+  }
+};
+
+getData();
 </script>
 
 <template>
   <div>
-    <EditarDJ v-if="estadoEditor" :djEditar="djEditar" @cerrarEditor="estadoEditor = false" />
+    <EditarDJ v-if="estadoEditor" :djEditar="djEditar" @cerrarEditor="estadoEditor = false" @getData="getData" />
   </div>
   <div class="container py-4 rounded mt-3" style="background-color: darkgray;">
     <div>
@@ -33,21 +71,25 @@ const nuevoDJ = () => {
         <table class="table">
           <thead>
             <th>Nombre</th>
+            <th>Instagram</th>
+            <th>Celular</th>
             <th class="d-flex justify-content-end">Accion</th>
           </thead>
           <tbody>
-            <!-- Cuando tenga la API
-            <tr v-for="dj in  djs " :key="dj.idDJ" :class="{ 'table-success': dj.actual }">
+            <tr v-for="dj in  djs " :key="dj.id" :class="{ 'table-success': dj.actual }">
               <td>{{ dj.nombre }}</td>
+              <td>{{ dj.instagram }}</td>
+              <td>{{ dj.tel }}</td>
               <td class=" d-flex justify-content-end">
                 <div class="btn-group">
-                  <button class="btn btn-info" @click="hacerActual(dj.idDJ) :disabled="dj.actual"">Hacer Actual</button>
-                  <button class="btn btn-info" @click="activarEditor(dj.idDJ)">Editar</button>
-                  <button class="btn btn-secondary" @click="verComentarios(dj.idDJ)">Ver Comentarios</button>
+                  <button class="btn btn-info" @click="hacerActual(dj)" :disabled="dj.actual">Hacer Actual</button>
+                  <button class="btn btn-warning" @click="activarEditor(dj)">Editar</button>
+                  <button class="btn btn-secondary" @click="verComentarios(dj)">Ver Comentarios</button>
                 </div>
               </td>
             </tr>
-            -->
+
+            <!-- Cuando tenga la API
             <tr djid="1" class="table-success">
               <td>Dj Tao</td>
               <td class="d-flex justify-content-end">
@@ -80,7 +122,7 @@ const nuevoDJ = () => {
                 </div>
               </td>
             </tr>
-
+-->
           </tbody>
         </table>
 
