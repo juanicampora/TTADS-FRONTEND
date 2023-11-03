@@ -1,52 +1,62 @@
 <script setup>
 import { ref } from 'vue';
 import EditarCancion from '@/components/EditarCancion.vue';
+import axios from 'axios';
 
+const canciones = ref([]);
 const estadoEditor = ref(false);
 const cancionEditar = ref(0);
+const nombreIngresado = ref('');
+const autorIngresado = ref('');
 
 const activarEditor = (cancionTabla) => {
   cancionEditar.value = cancionTabla;
   estadoEditor.value = true;
 };
-let canciones = [
-  {
-    idCancion: 3,
-    nombre: "Canción 3",
-    autor: "Autor 3",
-    puntaje: 5
-  },
-  {
-    idCancion: 1,
-    nombre: "Canción 1",
-    autor: "Autor 1",
-    puntaje: 4
-  },
-  {
-    idCancion: 5,
-    nombre: "Canción 5",
-    autor: "Autor 5",
-    puntaje: 4
-  },
-  {
-    idCancion: 2,
-    nombre: "Canción 2",
-    autor: "Autor 2",
-    puntaje: 3
-  },
-  {
-    idCancion: 4,
-    nombre: "Canción 4",
-    autor: "Autor 4",
-    puntaje: 2
+
+const guardarCancion = () => {
+  axios({
+    method: 'post',
+    url: 'https://fiestaappapi.onrender.com/api/canciones',
+    data: {
+      "nombre": nombreIngresado.value,
+      "autor": autorIngresado.value
+    }
+  });
+  nombreIngresado.value = '';
+  autorIngresado.value = '';
+  setTimeout(() => {
+    getData();
+  }, 1000);
+};
+
+const eliminarCancion = (idCancion) => {
+  axios({
+    method: 'delete',
+    url: `https://fiestaappapi.onrender.com/api/canciones/${idCancion}`,
+  });
+  setTimeout(() => {
+    getData();
+  }, 1000);
+};
+
+const getData = async () => {
+  try {
+    const { data } = await axios.get('https://fiestaappapi.onrender.com/api/canciones');
+    canciones.value = data.data;
+  } catch (error) {
+    console.log(error)
   }
-];
+};
+
+getData();
 
 </script>
 
 <template>
   <div>
-    <EditarCancion v-if="estadoEditor" :cancionEditar="cancionEditar" @cerrarEditor="estadoEditor = false" />
+    <EditarCancion v-if="estadoEditor" :cancionEditar="cancionEditar" @cerrarEditor="estadoEditor = false"
+      @getData="getData" />
   </div>
   <div class="container py-4 rounded mt-3" style="background-color: darkgray;">
     <div>
@@ -61,11 +71,12 @@ let canciones = [
           </thead>
           <tbody>
             <tr class="table-success">
-              <td><input type="text" class="form-control" placeholder="Nombre Cancion Nueva"></td>
-              <td><input type="text" class="form-control" placeholder="Autor Cancion Nueva"></td>
+              <td><input type="text" class="form-control" placeholder="Nombre Cancion Nueva" v-model="nombreIngresado">
+              </td>
+              <td><input type="text" class="form-control" placeholder="Autor Cancion Nueva" v-model="autorIngresado"></td>
               <td></td>
-              <td class="d-flex justify-content-end"><button type="submit" class=" btn btn-success"
-                  style="width: 150px;">Guardar</button></td>
+              <td class="d-flex justify-content-end"><button class=" btn btn-success" style="width: 150px;"
+                  @click="guardarCancion">Guardar</button></td>
             </tr>
             <tr v-for="cancion in canciones" :key="cancion.idCancion">
               <td>{{ cancion.nombre }}</td>
@@ -73,8 +84,8 @@ let canciones = [
               <td>{{ cancion.puntaje }}</td>
               <td class="d-flex justify-content-end">
                 <div class="btn-group">
-                  <button class="btn btn-warning" @click="activarEditor(cancion.idCancion)">Editar</button>
-                  <button class="btn btn-danger">Eliminar</button>
+                  <button class="btn btn-warning" @click="activarEditor(cancion)">Editar</button>
+                  <button class="btn btn-danger" @click="eliminarCancion(cancion.id)">Eliminar</button>
                 </div>
               </td>
             </tr>

@@ -1,6 +1,6 @@
 <script setup>
 import axios from 'axios'
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 
 const props = defineProps(['djEditar']);
 const emit = defineEmits(['getData', 'cerrarEditor'])
@@ -10,12 +10,14 @@ const nombreIngresado = ref('');
 const numeroIngresado = ref('');
 let url;
 let metodo;
+let esActual;
 if (props.djEditar) {
   metodo = 'put';
   url = `https://fiestaappapi.onrender.com/api/djs/${props.djEditar.id}`;
   instagramIngresado.value = props.djEditar.instagram;
   nombreIngresado.value = props.djEditar.nombre;
   numeroIngresado.value = props.djEditar.tel;
+  esActual = props.djEditar.actual;
 }
 else {
   metodo = 'post';
@@ -45,7 +47,7 @@ const guardarIngresado = () => {
       "nombre": nombreIngresado.value,
       "instagram": instagramIngresado.value,
       "tel": numeroIngresado.value,
-      "actual": false
+      "actual": esActual
     }
   });
   instagramIngresado.value = '';

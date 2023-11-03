@@ -45,8 +45,6 @@ const getData = async () => {
   try {
     const { data } = await axios.get('https://fiestaappapi.onrender.com/api/djs');
     djs.value = data.data;
-    console.log(djs.value);
-    console.log("HICE UN GET")
   } catch (error) {
     console.log(error)
   }
