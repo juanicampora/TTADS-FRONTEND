@@ -29,9 +29,6 @@ const hacerActual = (djTabla) => {
     method: 'put',
     url: `https://fiestaappapi.onrender.com/api/djs/${djTabla.id}`,
     data: {
-      "nombre": djEditar.nombre,
-      "instagram": djEditar.instagram,
-      "tel": djEditar.tel,
       "actual": true
     }
   });
