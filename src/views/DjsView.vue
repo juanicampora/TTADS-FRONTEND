@@ -1,14 +1,14 @@
 <script setup>
 import { ref } from 'vue';
 import EditarDJ from '@/components/EditarDJ.vue';
-import ComentariosDJ from '@/components/ComentariosDJ.vue';
+import OpinionesDJ from '@/components/OpinionesDJ.vue';
 import axios from 'axios';
 
 const djs = ref([]);
 const estadoEditor = ref(false);
 const djEditar = ref(0);
-const estadoComentarios = ref(false);
-const djComentarios = ref(0);
+const estadoOpiniones = ref(false);
+const djOpiniones = ref(0);
 
 const activarEditor = (djTabla) => {
   estadoEditor.value = false;
@@ -18,15 +18,17 @@ const activarEditor = (djTabla) => {
   }, 1);
 };
 
-const verComentarios = (djTabla) => {
-  estadoComentarios.value = false;
+const verOpiniones = (djTabla) => {
+  estadoEditor.value = false;
+  estadoOpiniones.value = false;
   setTimeout(() => {
-    djComentarios.value = djTabla;
-    estadoComentarios.value = true;
+    djOpiniones.value = djTabla;
+    estadoOpiniones.value = true;
   }, 1);
 };
 
 const nuevoDJ = () => {
+  estadoOpiniones.value = false;
   estadoEditor.value = false;
   setTimeout(() => {
     djEditar.value = null;
@@ -60,8 +62,7 @@ getData();
 <template>
   <div>
     <EditarDJ v-if="estadoEditor" :djEditar="djEditar" @cerrarEditor="estadoEditor = false" @getData="getData" />
-    <ComentariosDJ v-if="estadoComentarios" :djComentarios="djComentarios"
-      @cerrarComentarios="estadoComentarios = false" />
+    <OpinionesDJ v-if="estadoOpiniones" :djOpiniones="djOpiniones" @cerrarOpiniones="estadoOpiniones = false" />
   </div>
   <div class="container py-4 rounded mt-3" style="background-color: darkgray;">
     <div>
@@ -88,7 +89,7 @@ getData();
                 <div class="btn-group">
                   <button class="btn btn-info" @click="hacerActual(dj)" :disabled="dj.actual">Hacer Actual</button>
                   <button class="btn btn-warning" @click="activarEditor(dj)">Editar</button>
-                  <button class="btn btn-secondary" @click="verComentarios(dj)">Ver Comentarios</button>
+                  <button class="btn btn-secondary" @click="verOpiniones(dj)">Ver Opiniones</button>
                 </div>
               </td>
             </tr>
@@ -100,7 +101,7 @@ getData();
                 <div class="btn-group">
                   <button class="btn btn-info" @click="hacerActual(1)" disabled>Hacer Actual</button>
                   <button class="btn btn-warning" @click="activarEditor('Dj Tao')">Editar</button>
-                  <button class="btn btn-primary">Ver Comentarios</button>
+                  <button class="btn btn-primary">Ver Opiniones</button>
                 </div>
               </td>
             </tr>
@@ -111,7 +112,7 @@ getData();
                 <div class="btn-group">
                   <button class="btn btn-info" @click="hacerActual(1)">Hacer Actual</button>
                   <button class="btn btn-warning" @click="activarEditor('Dj Peligro')">Editar</button>
-                  <button class="btn btn-primary">Ver Comentarios</button>
+                  <button class="btn btn-primary">Ver Opiniones</button>
                 </div>
               </td>
             </tr>
@@ -122,7 +123,7 @@ getData();
                 <div class="btn-group">
                   <button class="btn btn-info" @click="hacerActual(1)">Hacer Actual</button>
                   <button class="btn btn-warning" @click="activarEditor('Fer Palacio')">Editar</button>
-                  <button class="btn btn-primary">Ver Comentarios</button>
+                  <button class="btn btn-primary">Ver Opiniones</button>
                 </div>
               </td>
             </tr>

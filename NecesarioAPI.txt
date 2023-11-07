@@ -18,10 +18,10 @@ votarCanciones(listaCancionesVotadas)
 -En el back tiene que sumarle 1 a cada cancion votada
 -En el front tiene que mostrar un mensaje de que se voto correctamente
 ----------------------------------------------------------------------------------------------------------------------------------------
-newComentario(comentarioDj)
+newOpinion(OpinionDj)
 
--Manda un string con el comentario
--En el back tiene que agregar el comentario a la lista de comentarios del dj actual
+-Manda un string con el Opinion
+-En el back tiene que agregar el Opinion a la lista de Opiniones del dj actual
 -En el front tiene que mostrar un mensaje de que se guardo correctamente
 ----------------------------------------------------------------------------------------------------------------------------------------
 

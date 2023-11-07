@@ -30,7 +30,7 @@ import { RouterLink, RouterView } from 'vue-router'
           Canciones</RouterLink>
       </li>
       <li class="nav-item">
-        <RouterLink class="nav-link" to="/comentariodj">Comentario Dj</RouterLink>
+        <RouterLink class="nav-link" to="/Opiniondj">Opinion Dj</RouterLink>
       </li>
     </ul>
   </header>
