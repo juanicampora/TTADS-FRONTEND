@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import axios from 'axios';
 
 const cancionesIngresadas = ref("");
 
@@ -11,7 +12,7 @@ const guardarCanciones = () => {
     const cancionSplit = cancion.split('-');
     axios({
       method: 'post',
-      url: 'https://fiestaappapi.onrender.com/api/cancionesdj',
+      url: 'https://fiestaappapi.onrender.com/api/canciondj',
       data: {
         "nombre": cancionSplit[1],
         "autor": cancionSplit[0]
@@ -19,7 +20,7 @@ const guardarCanciones = () => {
     });
   });
   setTimeout(() => {
-    getData();
+    limpiarIngresadas();
   }, 1000);
 }
 

@@ -11,6 +11,9 @@ import { RouterLink, RouterView } from 'vue-router'
         </RouterLink>
       </li>
       <li class="nav-item">
+        <RouterLink class="nav-link" to="/nuevanoche">Nueva Noche</RouterLink>
+      </li>
+      <li class="nav-item">
         <RouterLink class="nav-link" to="/djs">DJs</RouterLink>
       </li>
       <li class="nav-item">

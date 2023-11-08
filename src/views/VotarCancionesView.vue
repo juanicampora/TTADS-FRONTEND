@@ -1,50 +1,58 @@
 <script setup>
 import { ref } from 'vue';
+import axios from 'axios';
 
-const seleccionados = ref([]);
+const canciones = ref([]);
 
-const limpiarSeleccion = () => seleccionados.value = [];
+const idSeleccionados = ref([]);
+const seleccionCanciones = ref({});
+const cantidadSeleccionados = ref(0);
+
+const limpiarSeleccion = () => {
+  seleccionCanciones.value = {};
+  idSeleccionados.value = [];
+};
 
 const seleccionCancion = (idCancion) => {
-  if (seleccionados.value.includes(idCancion)) {
-    seleccionados.value = seleccionados.value.filter((id) => id != idCancion);
+  if (seleccionCanciones.value[idCancion]) {
+    seleccionCanciones.value[idCancion] = false;
   } else {
-    seleccionados.value.push(idCancion);
+    seleccionCanciones.value[idCancion] = true;
+  }
+  if (idSeleccionados.value.includes(idCancion)) {
+    idSeleccionados.value = idSeleccionados.value.filter((id) => id != idCancion);
+  } else {
+    idSeleccionados.value.push(idCancion);
   }
 };
 
-let canciones = [
-  {
-    idCancion: 3,
-    nombre: "Canción 3",
-    autor: "Autor 3",
-    puntaje: 5
-  },
-  {
-    idCancion: 1,
-    nombre: "Canción 1",
-    autor: "Autor 1",
-    puntaje: 4
-  },
-  {
-    idCancion: 5,
-    nombre: "Canción 5",
-    autor: "Autor 5",
-    puntaje: 4
-  },
-  {
-    idCancion: 2,
-    nombre: "Canción 2",
-    autor: "Autor 2",
-    puntaje: 3
-  },
-  {
-    idCancion: 4,
-    nombre: "Canción 4",
-    autor: "Autor 4",
-    puntaje: 2
+
+const votarCanciones = () => {
+  idSeleccionados.value.forEach(id => {
+    axios({
+      method: 'put',
+      url: `https://fiestaappapi.onrender.com/api/canciondj/${id}/votacion`
+    });
+  });
+  setTimeout(() => {
+    limpiarSeleccion();
+    getCancionesDj();
+  }, 1000);
+};
+
+const getCancionesDj = async () => {
+  try {
+    const { data } = await axios.get('https://fiestaappapi.onrender.com/api/canciondj/votacion');
+    canciones.value = data.data;
+    data.data.forEach(cancion => {
+      seleccionCanciones.value[cancion.id] = false;
+    });
+  } catch (error) {
+    console.log(error)
   }
-];
+};
+
+getCancionesDj();
 
 </script>
 
@@ -53,37 +61,40 @@ let canciones = [
     <div>
       <h1 class="text-center display-5 fw-bold text-body-emphasis mb-3">Votar Canciones</h1>
       <div class="mx-4">
-        <h6>Seleccione hasta 10 canciones que le gusten de la lista y presione "Votar"</h6>
-        <h6>Seleccionados: {{ seleccionados }}</h6>
-        <form action="">
-          <div class="mt-3 d-flex justify-content-center">
-            <button type="submit" class="btn btn-success" style="width: 200px; font-size: x-large;">Votar</button>
-          </div>
-          <table class="table">
-            <thead>
-              <th>Nombre de la Cancion</th>
-              <th>Autor</th>
-              <th>Puntaje</th>
-              <th>Me gusta</th>
-            </thead>
-            <tbody>
-              <tr v-for="cancion in canciones" :key="cancion.idCancion">
-                <td>{{ cancion.nombre }}</td>
-                <td>{{ cancion.autor }}</td>
-                <td>{{ cancion.puntaje }}</td>
-                <td>
-                  <div class="pretty p-icon p-smooth p-round p-bigger ">
-                    <input type="checkbox" @click="seleccionCancion(cancion.idCancion)" />
-                    <div class="state p-warning">
-                      <i class="icon material-icons">star</i>
-                      <label></label>
-                    </div>
+        <h5 class="text-center" :class="{ 'bg-white text-danger': idSeleccionados.length > 10 }">Seleccione hasta 10
+          canciones</h5>
+        <h6 class="text-center">Seleccionados: {{ idSeleccionados.length }}</h6>
+        <div class="mt-3 d-flex justify-content-evenly">
+          <button class="btn btn-secondary" style="width: 200px; font-size: x-large;"
+            @click="limpiarSeleccion">Limpiar</button>
+          <button :disabled="idSeleccionados.length > 10 || idSeleccionados.length === 0" class="btn btn-success"
+            style="width: 200px; font-size: x-large;" @click="votarCanciones">Votar</button>
+        </div>
+        <table class="table">
+          <thead>
+            <th>Nombre de la Cancion</th>
+            <th>Autor</th>
+            <th>Puntaje</th>
+            <th>Me gusta</th>
+          </thead>
+          <tbody>
+            <tr v-for="cancion in canciones" :key="cancion.id">
+              <td>{{ cancion.cancion.nombre }}</td>
+              <td>{{ cancion.cancion.autor }}</td>
+              <td>{{ cancion.puntaje }}</td>
+              <td>
+                <div class="pretty p-icon p-smooth p-round p-bigger ">
+                  <input type="checkbox" :checked="seleccionCanciones[cancion.id]"
+                    @click="seleccionCancion(cancion.id)" />
+                  <div class="state p-warning">
+                    <i class="icon material-icons">star</i>
+                    <label></label>
                   </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </form>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

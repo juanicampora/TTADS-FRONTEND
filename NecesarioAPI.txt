@@ -1,6 +1,8 @@
+POST nuevanoche
+- En el back hay que poner en cancionDj como false a todas aquellas que tengan actual=true y tambien actualizar
+  la fechaActual del Dj 
+----------------------------------------------------------------------------------------------------------------------------------------
 POST canciondj (mando una cancion del dj ACTUAL)
-
--En el back tiene que agregarla a la lista de canciones si no esta todavia, fijarse si no esta todavia en la lista de canciones del DJ ACTUAl y agregarla a la lista
 -En el front tiene que mostrar un mensaje de que se guardo correctamente
 ----------------------------------------------------------------------------------------------------------------------------------------
 topCancionesFecha(fecha) -> listaCanciones con: idCancion,nombre,autor,puntaje
@@ -18,10 +20,7 @@ votarCanciones(listaCancionesVotadas)
 -En el back tiene que sumarle 1 a cada cancion votada
 -En el front tiene que mostrar un mensaje de que se voto correctamente
 ----------------------------------------------------------------------------------------------------------------------------------------
-newOpinion(OpinionDj)
-
--Manda un string con el Opinion
--En el back tiene que agregar el Opinion a la lista de Opiniones del dj actual
+POST OpinionDj
 -En el front tiene que mostrar un mensaje de que se guardo correctamente
 ----------------------------------------------------------------------------------------------------------------------------------------
 

@@ -11,6 +11,11 @@ const router = createRouter({
       component: InicioView
     },
     {
+      path: '/nuevanoche',
+      name: 'nuevanoche',
+      component: () => import('../views/NuevaNocheView.vue')
+    },
+    {
       path: '/djs',
       name: 'djs',
       component: () => import('../views/DjsView.vue')

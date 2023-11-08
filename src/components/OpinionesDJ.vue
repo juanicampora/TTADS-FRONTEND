@@ -6,6 +6,7 @@ const props = defineProps(['djOpiniones']);
 const emit = defineEmits(['cerrarOpiniones'])
 
 const opiniones = ref([]);
+console.log(props.djOpiniones.id);
 
 const getOpiniones = async () => {
   try {

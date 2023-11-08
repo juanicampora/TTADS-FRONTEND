@@ -37,7 +37,7 @@ const eliminarIngresado = () => {
   setTimeout(() => {
     emit('getData');
     emit('cerrarEditor');
-  }, 500);
+  }, 1000);
 }
 
 const guardarIngresado = () => {
