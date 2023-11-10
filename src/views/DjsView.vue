@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import EditarDJ from '@/components/EditarDJ.vue';
 import OpinionesDJ from '@/components/OpinionesDJ.vue';
 import axios from 'axios';
+import moment from 'moment';
 
 const djs = ref([]);
 const estadoEditor = ref(false);
@@ -86,8 +87,7 @@ getData();
               <td>{{ dj.nombre }}</td>
               <td>{{ dj.instagram }}</td>
               <td>{{ dj.tel }}</td>
-              <td>{{ new Date(dj.fechaActual).getDate() + '-' + (new Date(dj.fechaActual).getMonth() + 1) + '-' + new
-                Date(dj.fechaActual).getFullYear() }}</td>
+              <td>{{ dj.fechaActual }}</td>
               <td class=" d-flex justify-content-end">
                 <div class="btn-group">
                   <button class="btn btn-info" @click="hacerActual(dj)" :disabled="dj.actual">Hacer Actual</button>
