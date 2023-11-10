@@ -19,7 +19,7 @@ const getFechasPermitidas = async () => {
 }
 
 //fechasPermitidas hardcodeadas generadas aleatoriamente
-//fechasPermitidas.value = ["2023/11/10", "2023/11/08"]
+fechasPermitidas.value = ["2023/11/10", "2023/11/08"]
 
 const getTopCanciones = async () => {
   try {
