@@ -4,7 +4,7 @@ import axios from 'axios';
 const nuevaNoche = () => {
   axios({
     method: 'post',
-    url: 'https://fiestaappapi.onrender.com/api/nuevanoche',
+    url: 'https://fiestaappapi.onrender.com/api/canciondj/nuevanoche',
   });
 }
 

@@ -67,7 +67,7 @@ getData();
   <div class="container py-4 rounded mt-3" style="background-color: darkgray;">
     <div>
       <h1 class="text-center display-5 fw-bold text-body-emphasis">DJs</h1>
-      <h6 class="text-center">(DJ actual en verde)</h6>
+      <h6 class="text-center">(DJ ACTUAL en verde)</h6>
       <div class="mx-4">
         <div class="my-3">
           <button type="button" class="btn btn-success" @click="nuevoDJ" style="width: 300px; font-size: large;">Nuevo
@@ -78,6 +78,7 @@ getData();
             <th>Nombre</th>
             <th>Instagram</th>
             <th>Celular</th>
+            <th>Ultima fecha que tocó</th>
             <th class="d-flex justify-content-end">Accion</th>
           </thead>
           <tbody>
@@ -85,6 +86,8 @@ getData();
               <td>{{ dj.nombre }}</td>
               <td>{{ dj.instagram }}</td>
               <td>{{ dj.tel }}</td>
+              <td>{{ new Date(dj.fechaActual).getDate() + '-' + (new Date(dj.fechaActual).getMonth() + 1) + '-' + new
+                Date(dj.fechaActual).getFullYear() }}</td>
               <td class=" d-flex justify-content-end">
                 <div class="btn-group">
                   <button class="btn btn-info" @click="hacerActual(dj)" :disabled="dj.actual">Hacer Actual</button>
