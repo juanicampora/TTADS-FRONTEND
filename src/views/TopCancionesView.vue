@@ -2,40 +2,34 @@
 import { ref } from 'vue';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
+import axios from 'axios';
 
-const date = ref();
-let canciones = [
-  {
-    idCancion: 3,
-    nombre: "Canción 3",
-    autor: "Autor 3",
-    puntaje: 5
-  },
-  {
-    idCancion: 1,
-    nombre: "Canción 1",
-    autor: "Autor 1",
-    puntaje: 4
-  },
-  {
-    idCancion: 5,
-    nombre: "Canción 5",
-    autor: "Autor 5",
-    puntaje: 4
-  },
-  {
-    idCancion: 2,
-    nombre: "Canción 2",
-    autor: "Autor 2",
-    puntaje: 3
-  },
-  {
-    idCancion: 4,
-    nombre: "Canción 4",
-    autor: "Autor 4",
-    puntaje: 2
+const fechasPermitidas = ref([]);
+const fechaElegida = ref();
+
+const canciones = ref([]);
+
+const getFechasPermitidas = async () => {
+  try {
+    const { data } = await axios.get('https://fiestaappapi.onrender.com/api/canciondj/fechas');
+    fechasPermitidas.value = data.data;
+  } catch (error) {
+    console.log(error)
   }
-];
+}
+
+//fechasPermitidas hardcodeadas generadas aleatoriamente
+fechasPermitidas.value = ["2023/07/11", "2023/11/08"]
+
+const getTopCanciones = async () => {
+  try {
+    const { data } = await axios.get(`https://fiestaappapi.onrender.com/api/canciondj/topcanciones/${fechaElegida.value}`);
+    canciones.value = data.data;
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 
 </script>
 
@@ -45,7 +39,8 @@ let canciones = [
       <h1 class="text-center display-5 fw-bold text-body-emphasis mb-3">Top Canciones</h1>
       <div class="mx-4">
         <h5 class="mb-4">Seleccione una fecha para mostrar su top canciones</h5>
-        <VueDatePicker v-model="date" model-type="dd.MM.yyyy" />
+        <VueDatePicker v-model="fechaElegida" model-type="yyyy.MM.dd" :allowed-dates="fechasPermitidas" position="left"
+          :model-value="fechaElegida" @update:model-value="getTopCanciones" />
 
         <table class="table">
           <thead>
@@ -55,8 +50,8 @@ let canciones = [
           </thead>
           <tbody>
             <tr v-for="cancion in canciones" :key="cancion.idCancion">
-              <td>{{ cancion.nombre }}</td>
-              <td>{{ cancion.autor }}</td>
+              <td>{{ cancion.cancion.nombre }}</td>
+              <td>{{ cancion.cancion.autor }}</td>
               <td>{{ cancion.puntaje }}</td>
             </tr>
           </tbody>
