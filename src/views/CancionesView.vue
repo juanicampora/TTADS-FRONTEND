@@ -2,12 +2,15 @@
 import { ref } from 'vue';
 import EditarCancion from '@/components/EditarCancion.vue';
 import axios from 'axios';
+import Carga from '@/components/Carga.vue';
 
 const canciones = ref([]);
 const estadoEditor = ref(false);
 const cancionEditar = ref(0);
 const nombreIngresado = ref('');
 const autorIngresado = ref('');
+const esperandoAPI = ref(false);
+const claseEspera = ref('');
 
 const activarEditor = (cancionTabla) => {
   cancionEditar.value = cancionTabla;
@@ -42,8 +45,12 @@ const eliminarCancion = (idCancion) => {
 
 const getData = async () => {
   try {
+    esperandoAPI.value = true;
+    claseEspera.value = 'disable-clicks';
     const { data } = await axios.get('https://fiestaappapi.onrender.com/api/canciones');
     canciones.value = data.data;
+    esperandoAPI.value = false;
+    claseEspera.value = '';
   } catch (error) {
     console.log(error)
   }
@@ -54,14 +61,15 @@ getData();
 </script>
 
 <template>
+  <Carga v-if="esperandoAPI" />
   <div>
     <EditarCancion v-if="estadoEditor" :cancionEditar="cancionEditar" @cerrarEditor="estadoEditor = false"
       @getData="getData" />
   </div>
-  <div class="container py-4 rounded mt-3" style="background-color: darkgray;">
-    <div>
+  <div :class="claseEspera">
+    <div class="container py-4 rounded mt-3" style="background-color: darkgray;">
       <h1 class="text-center display-5 fw-bold text-body-emphasis mb-3">Listado de todas las Canciones</h1>
-      <div class="mx-4">
+      <div class="table-responsive mx-4">
         <table class="table">
           <thead>
             <th>Nombre de la Cancion</th>
@@ -84,17 +92,25 @@ getData();
               <td>{{ cancion.puntaje }}</td>
               <td class="d-flex justify-content-end">
                 <div class="btn-group">
-                  <button class="btn btn-warning" @click="activarEditor(cancion)">Editar</button>
-                  <button class="btn btn-danger" @click="eliminarCancion(cancion.id)">Eliminar</button>
+                  <button class="btn btn-warning" @click="activarEditor(cancion)"><span class="material-symbols-outlined">
+                      edit
+                    </span></button>
+                  <button class="btn btn-danger" @click="eliminarCancion(cancion.id)"><span
+                      class="material-symbols-outlined">
+                      delete
+                    </span></button>
                 </div>
               </td>
             </tr>
           </tbody>
         </table>
-
-
-
       </div>
     </div>
   </div>
 </template>
+
+<style>
+.disable-clicks {
+  pointer-events: none;
+}
+</style>

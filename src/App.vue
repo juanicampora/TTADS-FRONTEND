@@ -1,41 +1,12 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+import NavbarOwner from '@/components/NavbarOwner2.vue'
 
 </script>
 
 <template>
-  <header class="d-flex justify-content-center py-3" style="background-color: #122c47;">
-    <ul class="nav nav-pills">
-      <li class="nav-item">
-        <RouterLink class="nav-link" to="/" aria-current="page">Inicio
-        </RouterLink>
-      </li>
-      <li class="nav-item">
-        <RouterLink class="nav-link" to="/nuevanoche">Nueva Noche</RouterLink>
-      </li>
-      <li class="nav-item">
-        <RouterLink class="nav-link" to="/djs">DJs</RouterLink>
-      </li>
-      <li class="nav-item">
-        <RouterLink class="nav-link" to="/canciones">Canciones
-        </RouterLink>
-      </li>
-      <li class="nav-item">
-        <RouterLink class="nav-link" to="/cargacancionesdj">Carga Canciones DJ
-        </RouterLink>
-      </li>
-      <li class="nav-item">
-        <RouterLink class="nav-link" to="/topcanciones">Top
-          Canciones</RouterLink>
-      </li>
-      <li class="nav-item">
-        <RouterLink class="nav-link" to="/votarcanciones">Votar
-          Canciones</RouterLink>
-      </li>
-      <li class="nav-item">
-        <RouterLink class="nav-link" to="/Opiniondj">Opinion Dj</RouterLink>
-      </li>
-    </ul>
+  <header class="d-flex justify-content-center py-3" style="position:relative; z-index:10000; background-color: #282828;">
+    <NavbarOwner />
   </header>
 
   <div>

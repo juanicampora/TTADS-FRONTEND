@@ -1,12 +1,15 @@
 <script setup>
 import { ref } from 'vue';
 import axios from 'axios';
+import Carga from '@/components/Carga.vue';
 
 const canciones = ref([]);
 
 const idSeleccionados = ref([]);
 const seleccionCanciones = ref({});
 const cantidadSeleccionados = ref(0);
+const esperandoAPI = ref(false);
+const claseEspera = ref('');
 
 const limpiarSeleccion = () => {
   seleccionCanciones.value = {};
@@ -42,11 +45,15 @@ const votarCanciones = () => {
 
 const getCancionesDj = async () => {
   try {
+    esperandoAPI.value = true;
+    claseEspera.value = 'disable-clicks';
     const { data } = await axios.get('https://fiestaappapi.onrender.com/api/canciondj/votacion');
     canciones.value = data.data;
     data.data.forEach(cancion => {
       seleccionCanciones.value[cancion.id] = false;
     });
+    esperandoAPI.value = false;
+    claseEspera.value = '';
   } catch (error) {
     console.log(error)
   }
@@ -57,8 +64,9 @@ getCancionesDj();
 </script>
 
 <template>
-  <div class="container py-4 rounded mt-3" style="background-color: darkgray;">
-    <div>
+  <Carga v-if="esperandoAPI" />
+  <div :class="claseEspera">
+    <div class="container py-4 rounded mt-3" style="background-color: darkgray;">
       <h1 class="text-center display-5 fw-bold text-body-emphasis mb-3">Votar Canciones</h1>
       <div class="mx-4">
         <h5 class="text-center" :class="{ 'bg-white text-danger': idSeleccionados.length > 10 }">Seleccione hasta 10
@@ -99,3 +107,9 @@ getCancionesDj();
     </div>
   </div>
 </template>
+
+<style>
+.disable-clicks {
+  pointer-events: none;
+}
+</style>

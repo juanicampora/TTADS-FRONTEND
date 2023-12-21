@@ -4,8 +4,7 @@ import EditarDJ from '@/components/EditarDJ.vue';
 import OpinionesDJ from '@/components/OpinionesDJ.vue';
 import axios from 'axios';
 import moment from 'moment';
-import Loading from 'vue-loading-overlay';
-import 'vue-loading-overlay/dist/css/index.css';
+import Carga from '@/components/Carga.vue';
 
 const djs = ref([]);
 const estadoEditor = ref(false);
@@ -13,7 +12,7 @@ const djEditar = ref(0);
 const estadoOpiniones = ref(false);
 const djOpiniones = ref(0);
 const esperandoAPI = ref(false);
-const fullPage = ref(true);
+const claseEspera = ref('');
 
 
 const activarEditor = (djTabla) => {
@@ -49,16 +48,17 @@ const hacerActual = (djTabla) => {
   });
   setTimeout(() => {
     getData();
-  }, 1000);
+  }, 1500);
 };
 
 
 const getData = async () => {
   try {
     esperandoAPI.value = true;
+    claseEspera.value = 'disable-clicks disabled';
     const { data } = await axios.get('https://fiestaappapi.onrender.com/api/djs');
-    console.log("PRUEBAAAA")
     esperandoAPI.value = false;
+    claseEspera.value = '';
     djs.value = data.data;
   } catch (error) {
     console.log(error)
@@ -69,8 +69,10 @@ getData();
 </script>
 
 <template>
-  <div>
-    <loading v-model:active="esperandoAPI" color="#42b883" :is-full-page="fullPage" />
+  <Carga v-if="esperandoAPI" />
+  <div :class="claseEspera">
+    <!-- <loading v-model:active="esperandoAPI" color="#42b883" :is-full-page="fullPage" /> -->
+
     <div>
       <EditarDJ v-if="estadoEditor" :djEditar="djEditar" @cerrarEditor="estadoEditor = false" @getData="getData" />
       <OpinionesDJ v-if="estadoOpiniones" :djOpiniones="djOpiniones" @cerrarOpiniones="estadoOpiniones = false" />
@@ -84,6 +86,8 @@ getData();
             <button type="button" class="btn btn-success" @click="nuevoDJ" style="width: 300px; font-size: large;">Nuevo
               DJ</button>
           </div>
+        </div>
+        <div class="table-responsive mx-4">
           <table class="table">
             <thead>
               <th>Nombre</th>
@@ -100,9 +104,9 @@ getData();
                 <td>{{ dj.fechaActual }}</td>
                 <td class=" d-flex justify-content-end">
                   <div class="btn-group">
-                    <button class="btn btn-info" @click="hacerActual(dj)" :disabled="dj.actual">Hacer Actual</button>
+                    <button class="btn btn-info" @click="hacerActual(dj)" :disabled="dj.actual">Actual</button>
                     <button class="btn btn-warning" @click="activarEditor(dj)">Editar</button>
-                    <button class="btn btn-secondary" @click="verOpiniones(dj)">Ver Opiniones</button>
+                    <button class="btn btn-secondary" @click="verOpiniones(dj)">Opiniones</button>
                   </div>
                 </td>
               </tr>
@@ -113,3 +117,9 @@ getData();
     </div>
   </div>
 </template>
+
+<style>
+.disable-clicks {
+  pointer-events: none;
+}
+</style>

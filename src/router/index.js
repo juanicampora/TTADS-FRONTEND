@@ -41,8 +41,8 @@ const router = createRouter({
       component: () => import('../views/VotarCancionesView.vue')
     },
     {
-      path: '/Opiniondj',
-      name: 'Opiniondj',
+      path: '/opiniondj',
+      name: 'opiniondj',
       component: () => import('../views/OpinionDjView.vue')
     },
     {
