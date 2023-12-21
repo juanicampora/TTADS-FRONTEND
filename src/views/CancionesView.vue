@@ -13,8 +13,12 @@ const esperandoAPI = ref(false);
 const claseEspera = ref('');
 
 const activarEditor = (cancionTabla) => {
+  estadoEditor.value = false;
   cancionEditar.value = cancionTabla;
-  estadoEditor.value = true;
+  setTimeout(() => {
+    estadoEditor.value = true;
+  }, 10);
+
 };
 
 const guardarCancion = () => {
@@ -83,8 +87,8 @@ getData();
               </td>
               <td><input type="text" class="form-control" placeholder="Autor Cancion Nueva" v-model="autorIngresado"></td>
               <td></td>
-              <td class="d-flex justify-content-end"><button class=" btn btn-success" style="width: 150px;"
-                  @click="guardarCancion">Guardar</button></td>
+              <td class="d-flex justify-content-end"><button class=" btn btn-success" style="width:82px;"
+                  @click="guardarCancion"><i class="bi bi-plus-lg"></i></button></td>
             </tr>
             <tr v-for="cancion in canciones" :key="cancion.idCancion">
               <td>{{ cancion.nombre }}</td>
@@ -92,13 +96,10 @@ getData();
               <td>{{ cancion.puntaje }}</td>
               <td class="d-flex justify-content-end">
                 <div class="btn-group">
-                  <button class="btn btn-warning" @click="activarEditor(cancion)"><span class="material-symbols-outlined">
-                      edit
-                    </span></button>
-                  <button class="btn btn-danger" @click="eliminarCancion(cancion.id)"><span
-                      class="material-symbols-outlined">
-                      delete
-                    </span></button>
+                  <button class="btn btn-warning" @click="activarEditor(cancion)"><i
+                      class="bi bi-pencil-square"></i></button>
+                  <button class="btn btn-danger" @click="eliminarCancion(cancion.id)"><i
+                      class="bi bi-trash3"></i></button>
                 </div>
               </td>
             </tr>

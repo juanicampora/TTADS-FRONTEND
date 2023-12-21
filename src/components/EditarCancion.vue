@@ -36,7 +36,7 @@ const guardarIngresado = () => {
 <template>
   <div class="container py-4 rounded my-3" style="background-color: darkgray;">
     <div>
-      <h1 class="text-center display-5 fw-bold text-body-emphasis">Editar {{ cancionEditar.nombre }}</h1>
+      <h1 class="text-center display-5 fw-bold text-body-emphasis">Editando {{ cancionEditar.nombre }}</h1>
       <div class="col-lg-6 mx-auto">
         <form>
           <input class="form-control mt-3" type="text" placeholder="Nombre cancion" v-model="nombreIngresado">
@@ -46,8 +46,8 @@ const guardarIngresado = () => {
               <input class="form-control mt-3" type="number" placeholder="Puntaje" disabled v-model="puntajeIngresado">
             </div>
             <div class="col">
-              <button class="btn btn-primary mt-3" type="button" @click="puntajeIngresado = 0">Reiniciar
-                Puntaje</button>
+              <button class="btn btn-primary mt-3" type="button" @click="puntajeIngresado = 0"><i
+                  class="bi bi-arrow-counterclockwise"></i> Reiniciar</button>
             </div>
           </div>
           <div class="mt-3 d-flex justify-content-evenly">

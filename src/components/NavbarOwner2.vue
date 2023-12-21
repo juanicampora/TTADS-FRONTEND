@@ -4,7 +4,7 @@
       class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
       <div class="col-md-3 mb-2 mb-md-0">
         <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
-          <span class="material-symbols-outlined" style="color:green; font-size: xx-large;">
+          <span class="material-symbols-outlined" style="color:#198754; font-size: xx-large;">
             celebration
           </span>
         </a>
@@ -12,10 +12,10 @@
 
       <ul class="nav nav-pills col-12 col-md-auto mb-2 justify-content-center mb-md-0">
         <li class="nav-item">
-          <RouterLink class="nav-link " to="/nuevanoche">Nueva Noche</RouterLink>
+          <RouterLink class="nav-link " to="/nuevanoche"><i class="bi bi-plus-circle"></i> Nueva Noche</RouterLink>
         </li>
         <li class="nav-item">
-          <RouterLink class="nav-link " to="/djs">DJs</RouterLink>
+          <RouterLink class="nav-link " to="/djs">Menu DJs</RouterLink>
         </li>
         <li class="nav-item">
           <RouterLink class="nav-link " to="/canciones">Canciones
@@ -48,15 +48,13 @@
 .nav-pills .nav-link.active {
   color: #ffffff;
   background-color: #198754;
-  /* Puedes ajustar este color de fondo según tus preferencias */
 }
 
 .nav-link {
   color: #198754;
 }
 
-.nav-link-hover-color:hover {
-  color: #198754;
-  /* Puedes ajustar este color de fondo según tus preferencias */
+.nav-link:hover {
+  color: #1987549f;
 }
 </style>
