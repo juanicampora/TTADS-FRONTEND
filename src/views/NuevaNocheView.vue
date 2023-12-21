@@ -1,11 +1,14 @@
 <script setup>
 import axios from 'axios';
-
+import Toast from '../components/Toast.vue';
+import ref from 'vue';
+const alerta = ref(false);
 const nuevaNoche = () => {
-  axios({
-    method: 'post',
-    url: 'https://fiestaappapi.onrender.com/api/canciondj/nuevanoche',
-  });
+  // axios({
+  //   method: 'post',
+  //   url: 'https://fiestaappapi.onrender.com/api/canciondj/nuevanoche',
+  // });
+  alerta.value=true;
 }
 
 </script>
@@ -21,4 +24,5 @@ const nuevaNoche = () => {
       </div>
     </div>
   </div>
+  <Toast v-if="alerta" message="Se ha creado la nueva noche" type="success"/>
 </template>
