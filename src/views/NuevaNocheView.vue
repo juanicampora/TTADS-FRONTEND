@@ -1,11 +1,30 @@
 <script setup>
 import axios from 'axios';
+import Toast from '@/components/Toast.vue';
+import { ref } from 'vue';
 
-const nuevaNoche = () => {
-  axios({
-    method: 'post',
-    url: 'https://fiestaappapi.onrender.com/api/canciondj/nuevanoche',
-  });
+const alerta = ref(false);
+const mensaje = ref('');
+const tipo = ref('');
+
+const nuevaNoche = async () => {
+  try {
+    const { data } = await axios.get('https://fiestaappapi.onrender.com/api/canciondj/nuevanoche');
+    mensaje.value = data.message;
+    tipo.value = 'success';
+    alerta.value = false;
+    setTimeout(() => {
+      alerta.value = true;
+    }, 10);
+  } catch (error) {
+    console.log(error)
+    mensaje.value = error.message;
+    tipo.value = 'danger'
+    alerta.value = false;
+    setTimeout(() => {
+      alerta.value = true;
+    }, 10);
+  }
 }
 
 </script>
@@ -21,4 +40,5 @@ const nuevaNoche = () => {
       </div>
     </div>
   </div>
+  <Toast v-if="alerta" :message="mensaje" :type="tipo" />
 </template>
