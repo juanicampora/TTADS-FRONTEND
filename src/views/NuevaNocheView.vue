@@ -6,8 +6,6 @@ const nuevaNoche = () => {
     method: 'post',
     url: 'https://fiestaappapi.onrender.com/api/canciondj/nuevanoche',
   });
-  var toast = new bootstrap.Toast(document.getElementById('alerta'));
-  toast.show();
 }
 
 </script>
@@ -20,19 +18,6 @@ const nuevaNoche = () => {
         <h5>Para crear una nueva noche pulse el siguiente boton </h5>
         <h6>(Se reiniciaran las canciones del DJ actual)</h6>
         <button type="button" class="btn btn-success btn-lg mt-4" @click="nuevaNoche">Nueva Noche</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="toast-container position-fixed bottom-0 end-0 p-3">
-    <div id="alerta" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-      <div class="toast-header">
-        <strong class="me-auto">Notificacion</strong>
-        <small>11 mins ago</small>
-        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-      </div>
-      <div class="toast-body">
-        Hello, world! This is a toast message.
       </div>
     </div>
   </div>

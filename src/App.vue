@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import NavbarOwner from '@/components/NavbarOwner2.vue'
+import NavbarOwner from '@/components/NavbarOwner.vue'
 
 </script>
 

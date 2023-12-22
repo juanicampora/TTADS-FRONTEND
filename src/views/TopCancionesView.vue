@@ -18,7 +18,6 @@ const getFechasPermitidas = async () => {
     claseEspera.value = 'disable-clicks';
     const { data } = await axios.get('https://fiestaappapi.onrender.com/api/canciondj/fechas');
     fechasPermitidas.value = formatearFechas(data.data);
-    console.log(fechasPermitidas.value)
     esperandoAPI.value = false;
     claseEspera.value = '';
   } catch (error) {
@@ -33,6 +32,7 @@ getFechasPermitidas();
 
 const getTopCanciones = async () => {
   try {
+    console.log(fechaElegida.value)
     const { data } = await axios.get(`https://fiestaappapi.onrender.com/api/canciondj/topcanciones/${fechaElegida.value}`);
     canciones.value = data.data;
     tablaLista.value = true;
@@ -51,6 +51,13 @@ const formatearFechas = (fechas) => {
   return fechasFormateadas;
 }
 
+const format = (fechaElegida) => {
+  const day = fechaElegida.getDate();
+  const month = fechaElegida.getMonth() + 1;
+  const year = fechaElegida.getFullYear();
+
+  return `La fecha elegida es ${day}/${month}/${year}`;
+}
 </script>
 
 <template>
@@ -59,11 +66,12 @@ const formatearFechas = (fechas) => {
     <div class="container py-4 rounded mt-3" style="background-color: darkgray;">
       <h1 class="text-center display-5 fw-bold text-body-emphasis mb-3">Top Canciones</h1>
       <div class="mx-4">
-        <h5 class="text-center mb-4">Seleccione una fecha para mostrar su top canciones</h5>
         <div class="text-center mb-4">
-          <VueDatePicker dark placeholder="Seleccione una fecha" v-model="fechaElegida" model-type="yyyy.MM.dd"
-            :allowed-dates="fechasPermitidas" :enable-time-picker="false" position="left" :model-value="fechaElegida"
-            @update:model-value="getTopCanciones" />
+          <div class="d-inline-block rounded" style="width: 435px;">
+            <VueDatePicker dark placeholder="Seleccione una fecha para mostrar su top canciones" v-model="fechaElegida"
+              model-type="yyyy.MM.dd" :allowed-dates="fechasPermitidas" :enable-time-picker="false" position="center"
+              :model-value="fechaElegida" @update:model-value="getTopCanciones" :format="format" />
+          </div>
         </div>
 
         <table v-if="tablaLista" class="table">
