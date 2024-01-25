@@ -1,6 +1,9 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-
+import { ref } from 'vue'
+import Carga from '@/components/Carga.vue';
+import { useUsuario } from '@/stores/usuario'
+const usuario = useUsuario()
+const esperando = ref(false)
 // Firebase
 import { initializeApp } from "firebase/app";
 const firebaseConfig = {
@@ -15,26 +18,29 @@ const appfirebase = initializeApp(firebaseConfig);
 // Firebase GoogleAuth
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 const loguear = () => {
+  esperando.value = true;
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
   auth.languageCode = 'es';
   signInWithPopup(auth, provider)
     .then((result) => {
-      console.log('BIEEEEEEEEEEEEEEEN');
-      console.log(result.user.uid);
-      console.log(result.user.displayName);
-      console.log("EL UID ES EL DE ARRIBA")
+      usuario.tipo = 'Cliente'
+      usuario.uid = result.user.uid;
+      usuario.name = result.user.displayName;
+      esperando.value = false;
     }).catch((error) => {
       // Handle Errors here.
       console.log('Hubo un error con firebase');
       const errorCode = error.code;
       const errorMessage = error.message;
+      esperando.value = false;
     });
 }
 
 </script>
 
 <template>
+  <Carga v-if="esperando" />
   <div class="login-page">
     <div class="form">
       <div class="login-form">

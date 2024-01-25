@@ -1,3 +1,8 @@
+<script setup>
+import { useUsuario } from '@/stores/usuario'
+const usuario = useUsuario()
+
+</script>
 <template>
   <div class="container">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
@@ -49,7 +54,7 @@
         </li>
       </ul>
       <div class="col-md-3 text-end">
-        <button type="button" class="btn btn-outline-success me-2">Cerrar Sesión</button>
+        <button type="button" @click="usuario.cerrarsesion()" class="btn btn-outline-success me-2">Cerrar Sesión</button>
       </div>
     </header>
   </div>

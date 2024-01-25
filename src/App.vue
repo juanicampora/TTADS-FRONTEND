@@ -5,15 +5,16 @@ import NavbarOwner from '@/components/NavbarOwner.vue'
 import Login from './views/auth/Login.vue';
 import LoginAdmin from './views/auth/LoginAdmin.vue';
 import LoginDJ from './views/auth/LoginDJ.vue';
-import { useRoute } from 'vue-router'
 
+import { useRoute } from 'vue-router'
 const route = ref(useRoute());
 
-const logueado = ref(true);
+import { useUsuario } from '@/stores/usuario'
+const usuario = useUsuario()
 </script>
 
 <template>
-  <div v-if="logueado">
+  <div v-if="usuario.uid != ''">
     <header class="d-flex justify-content-center py-3"
       style="position:relative; z-index:10000; background-color: #282828;">
       <NavbarOwner />
