@@ -34,7 +34,7 @@ const guardarIngresado = () => {
 </script>
 
 <template>
-  <div class="container py-4 rounded my-3" style="background-color: darkgray;">
+  <div class="container py-4 rounded my-3" style="background-color: gray;">
     <div>
       <h1 class="text-center display-5 fw-bold text-body-emphasis">Editando {{ cancionEditar.nombre }}</h1>
       <div class="col-lg-6 mx-auto">

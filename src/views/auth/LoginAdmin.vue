@@ -5,14 +5,7 @@
 <template>
   <div class="login-page">
     <div class="form">
-      <form v-if="rol = 'Staff'" class="register-form">
-        <input type="text" placeholder="Usuario" />
-        <input type="password" placeholder="Contraseña" />
-        <input type="text" placeholder="Correo electronico" />
-        <button>Ingresar</button>
-        <p class="message">Already registered? <a href="#">Sign In</a></p>
-      </form>
-      <form v-if="rol = 'User'" class="login-form">
+      <form class="login-form">
         <input type="text" placeholder="Usuario" />
         <input type="password" placeholder="Contraseña" />
         <button @click="loguear">Ingresar</button>
@@ -22,7 +15,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 .login-page {
   width: 360px;
   padding: 8% 0 0;
@@ -54,14 +47,13 @@
 
 .form button {
   font-family: "Roboto", sans-serif;
-  text-transform: uppercase;
   outline: 0;
   background: #4CAF50;
   width: 100%;
   border: 0;
   padding: 15px;
   color: #FFFFFF;
-  font-size: 14px;
+  font-size: 15px;
   -webkit-transition: all 0.3 ease;
   transition: all 0.3 ease;
   cursor: pointer;
@@ -127,15 +119,5 @@
 
 .container .info span .fa {
   color: #EF3B3A;
-}
-
-body {
-  background: #76b852;
-  /* fallback for old browsers */
-  background: rgb(141, 194, 111);
-  background: linear-gradient(90deg, rgba(141, 194, 111, 1) 0%, rgba(118, 184, 82, 1) 50%);
-  font-family: "Roboto", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 </style>

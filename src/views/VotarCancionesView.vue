@@ -66,7 +66,7 @@ getCancionesDj();
 <template>
   <Carga v-if="esperandoAPI" />
   <div :class="claseEspera">
-    <div class="container py-4 rounded mt-3" style="background-color: darkgray;">
+    <div class="container py-4 rounded mt-3" style="background-color: gray;">
       <h1 class="text-center display-5 fw-bold text-body-emphasis mb-3">Votar Canciones</h1>
       <div class="mx-4">
         <h5 class="text-center" :class="{ 'bg-white text-danger': idSeleccionados.length > 10 }">Seleccione hasta 10

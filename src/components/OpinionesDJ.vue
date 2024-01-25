@@ -21,7 +21,7 @@ getOpiniones();
 </script>
 
 <template>
-  <div class="container py-4 rounded my-3" style="background-color: darkgray;">
+  <div class="container py-4 rounded my-3" style="background-color: gray;">
     <div>
       <h1 class="text-center display-5 fw-bold text-body-emphasis">Opiniones de {{ djOpiniones.nombre }}</h1>
       <div class="mx-4">

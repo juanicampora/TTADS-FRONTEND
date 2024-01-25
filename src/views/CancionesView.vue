@@ -71,7 +71,7 @@ getData();
       @getData="getData" />
   </div>
   <div :class="claseEspera">
-    <div class="container py-4 rounded mt-3" style="background-color: darkgray;">
+    <div class="container py-4 rounded mt-3" style="background-color: gray;">
       <h1 class="text-center display-5 fw-bold text-body-emphasis mb-3">Listado de todas las Canciones</h1>
       <div class="table-responsive mx-4">
         <table class="table">

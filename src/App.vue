@@ -4,11 +4,12 @@ import { RouterView } from 'vue-router'
 import NavbarOwner from '@/components/NavbarOwner.vue'
 import Login from './views/auth/Login.vue';
 import LoginAdmin from './views/auth/LoginAdmin.vue';
+import LoginDJ from './views/auth/LoginDJ.vue';
 import { useRoute } from 'vue-router'
 
 const route = ref(useRoute());
 
-const logueado = ref(false);
+const logueado = ref(true);
 </script>
 
 <template>
@@ -23,7 +24,13 @@ const logueado = ref(false);
   </div>
   <div v-else>
     <LoginAdmin v-if="route.name === 'loginadmin'" />
+    <LoginDJ v-else-if="route.name === 'logindj'" />
     <Login v-else />
   </div>
 </template>
 
+<style>
+body {
+  background: linear-gradient(90deg, rgba(141, 194, 111, 1) 0%, rgba(118, 184, 82, 1) 50%);
+}
+</style>

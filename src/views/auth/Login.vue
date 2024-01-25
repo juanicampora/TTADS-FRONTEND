@@ -38,20 +38,15 @@ const loguear = () => {
   <div class="login-page">
     <div class="form">
       <div class="login-form">
-        <button id="botonLogin" @click="loguear">Iniciar Sesión con Google</button>
+        <button id="botonLogin" @click="loguear"><img src="Google.png"
+            style="height: 50px; width: 50px; background-color: white ; margin-right: 10px;">Ingresar con Google</button>
         <p class="message">Acceso Staff: <a href="logindj">DJs</a> / <a href="loginadmin">Administrador</a></p>
       </div>
     </div>
   </div>
 </template>
 
-<style>
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
+<style scoped>
 .login-page {
   width: 360px;
   padding: 8% 0 0;
@@ -83,14 +78,13 @@ input::-webkit-inner-spin-button {
 
 .form button {
   font-family: "Roboto", sans-serif;
-  text-transform: uppercase;
   outline: 0;
   background: #4CAF50;
   width: 100%;
   border: 0;
   padding: 15px;
   color: #FFFFFF;
-  font-size: 14px;
+  font-size: 17px;
   -webkit-transition: all 0.3 ease;
   transition: all 0.3 ease;
   cursor: pointer;
@@ -156,15 +150,5 @@ input::-webkit-inner-spin-button {
 
 .container .info span .fa {
   color: #EF3B3A;
-}
-
-body {
-  background: #76b852;
-  /* fallback for old browsers */
-  background: rgb(141, 194, 111);
-  background: linear-gradient(90deg, rgba(141, 194, 111, 1) 0%, rgba(118, 184, 82, 1) 50%);
-  font-family: "Roboto", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 </style>
