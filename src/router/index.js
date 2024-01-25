@@ -11,6 +11,16 @@ const router = createRouter({
       component: InicioView
     },
     {
+      path: '/loginadmin',
+      name: 'loginadmin',
+      component: () => import('../views/auth/LoginAdmin.vue')
+    },
+    {
+      path: '/logindj',
+      name: 'logindj',
+      component: () => import('../views/auth/LoginDJ.vue')
+    },
+    {
       path: '/nuevanoche',
       name: 'nuevanoche',
       component: () => import('../views/NuevaNocheView.vue')
