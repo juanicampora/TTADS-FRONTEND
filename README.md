@@ -1,32 +1,35 @@
 # TTADS-FRONTEND
 
-This template should help get you started developing with Vue 3 in Vite.
+## Deploy del Proyecto
 
-## Recommended IDE Setup
+El Frontend se despliega solo en Netlify cada vez que se realiza en commit en la rama master.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+Link al deploy: https://fiestapp.netlify.app/
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
+## Inicializar el proyecto
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+## Ramas
+
+- master: Rama principal del proyecto, se despliega en Netlify.
+- devJ: Rama de desarrollo de Juani.
+- devV: Rama de desarrollo de Valentino.
+
+### Compilar para Desarrollo
 
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+### Compilar para Producción
 
 ```sh
 npm run build
 ```
 
-COLORES:
+### COLORES
+
 Neon blue (#2272FF), black (#1D1D1)

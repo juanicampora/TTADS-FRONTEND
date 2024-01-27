@@ -3,14 +3,13 @@ import { ref } from 'vue'
 import { RouterView } from 'vue-router'
 import NavbarOwner from '@/components/NavbarOwner.vue'
 import Login from './views/auth/Login.vue';
-import LoginAdmin from './views/auth/LoginAdmin.vue';
-import LoginDJ from './views/auth/LoginDJ.vue';
+
+import { useUsuario } from '@/stores/usuario'
+const usuario = useUsuario()
 
 import { useRoute } from 'vue-router'
 const route = ref(useRoute());
 
-import { useUsuario } from '@/stores/usuario'
-const usuario = useUsuario()
 </script>
 
 <template>
@@ -24,9 +23,7 @@ const usuario = useUsuario()
     </div>
   </div>
   <div v-else>
-    <LoginAdmin v-if="route.name === 'loginadmin'" />
-    <LoginDJ v-else-if="route.name === 'logindj'" />
-    <Login v-else />
+    <Login />
   </div>
 </template>
 

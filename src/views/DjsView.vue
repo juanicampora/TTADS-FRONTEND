@@ -17,6 +17,7 @@ const claseEspera = ref('');
 
 const activarEditor = (djTabla) => {
   estadoEditor.value = false;
+  estadoOpiniones.value = false;
   setTimeout(() => {
     djEditar.value = djTabla;
     estadoEditor.value = true;

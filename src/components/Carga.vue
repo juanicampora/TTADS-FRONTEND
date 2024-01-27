@@ -1,4 +1,3 @@
-
 <template>
   <div class="overlay disable-clicks">
     <div class="spinner-grow text-success" style="width: 7rem; height: 7rem; border-width:8px" role="status">

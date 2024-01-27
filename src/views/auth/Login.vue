@@ -17,6 +17,21 @@ const firebaseConfig = {
 const appfirebase = initializeApp(firebaseConfig);
 // Firebase GoogleAuth
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+const pasarC = () => {
+  usuario.tipo = 'Cliente'
+  usuario.uid = 'aaaa';
+  usuario.name = 'Cliente';
+}
+const pasarA = () => {
+  usuario.tipo = 'Admin'
+  usuario.uid = 'aaaa';
+  usuario.name = 'Admin';
+}
+const pasarD = () => {
+  usuario.tipo = 'Dj'
+  usuario.uid = 'aaaa';
+  usuario.name = 'Dj';
+}
 const loguear = () => {
   esperando.value = true;
   const provider = new GoogleAuthProvider();
@@ -24,9 +39,11 @@ const loguear = () => {
   auth.languageCode = 'es';
   signInWithPopup(auth, provider)
     .then((result) => {
-      usuario.tipo = 'Cliente'
       usuario.uid = result.user.uid;
       usuario.name = result.user.displayName;
+      usuario.mail = result.user.email;
+      //Mandar con la API para loguear y obtener el tipo de usuario
+      usuario.tipo = 'Cliente' //cambiar por el tipo que devuelve la API
       esperando.value = false;
     }).catch((error) => {
       // Handle Errors here.
@@ -46,9 +63,13 @@ const loguear = () => {
       <div class="login-form">
         <button id="botonLogin" @click="loguear"><img src="Google.png"
             style="height: 50px; width: 50px; background-color: white ; margin-right: 10px;">Ingresar con Google</button>
-        <p class="message">Acceso Staff: <a href="logindj">DJs</a> / <a href="loginadmin">Administrador</a></p>
       </div>
     </div>
+  </div>
+  <div d-flex style="text-align: center;">
+    <button class="btn btn-danger" @click="pasarA">Entrar Directo Admin (hardcodeado)</button> <br><br>
+    <button class="btn btn-danger" @click="pasarD">Entrar Directo Dj (hardcodeado)</button> <br><br>
+    <button class="btn btn-danger" @click="pasarC">Entrar Directo Cliente (hardcodeado)</button>
   </div>
 </template>
 
