@@ -63,7 +63,7 @@ const guardarIngresado = () => {
 </script>
 
 <template>
-  <div class="container py-4 rounded my-3" style="background-color: darkgray;">
+  <div class="container py-4 rounded my-3" style="background-color: gray;">
     <div>
       <h1 v-if="djEditar" class="text-center display-5 fw-bold text-body-emphasis">Editar {{ djEditar.nombre }}</h1>
       <h1 v-else class="text-center display-5 fw-bold text-body-emphasis">Nuevo DJ</h1>

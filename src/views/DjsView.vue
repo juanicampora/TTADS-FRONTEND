@@ -17,6 +17,7 @@ const claseEspera = ref('');
 
 const activarEditor = (djTabla) => {
   estadoEditor.value = false;
+  estadoOpiniones.value = false;
   setTimeout(() => {
     djEditar.value = djTabla;
     estadoEditor.value = true;
@@ -77,7 +78,7 @@ getData();
       <EditarDJ v-if="estadoEditor" :djEditar="djEditar" @cerrarEditor="estadoEditor = false" @getData="getData" />
       <OpinionesDJ v-if="estadoOpiniones" :djOpiniones="djOpiniones" @cerrarOpiniones="estadoOpiniones = false" />
     </div>
-    <div class="container py-4 rounded mt-3" style="background-color: darkgray;">
+    <div class="container py-4 rounded mt-3" style="background-color: gray;">
       <div>
         <h1 class="text-center display-5 fw-bold text-body-emphasis">DJs</h1>
         <h6 class="text-center">(DJ ACTUAL en verde)</h6>
