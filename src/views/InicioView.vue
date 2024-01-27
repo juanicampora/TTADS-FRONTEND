@@ -1,4 +1,5 @@
 <script setup>
+import ManitoSmall from '@/assets/ManitoSmall.png';
 import { useUsuario } from '@/stores/usuario'
 const usuario = useUsuario()
 </script>
@@ -6,8 +7,7 @@ const usuario = useUsuario()
 <template>
   <div class="container py-4 rounded mt-3" style="background-color: gray;">
     <div>
-      <h1 class="text-center display-6 fw-bold text-body-emphasis mb-3">Hola {{ usuario.name }} <img
-          src="ManitoSmall.png">
+      <h1 class="text-center display-6 fw-bold text-body-emphasis mb-3">Hola {{ usuario.name }} <img :src="ManitoSmall">
       </h1>
       <h1 class="text-center display-4 fw-bold text-body-emphasis mb-3">¡Bienvenido a FiestApp!</h1>
 
