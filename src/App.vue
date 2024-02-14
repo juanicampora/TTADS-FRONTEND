@@ -1,7 +1,6 @@
 <script setup>
-import { ref } from 'vue'
 import { RouterView } from 'vue-router'
-import NavbarOwner from '@/components/NavbarOwner.vue'
+import Navbar from '@/components/Navbar.vue'
 import Login from './views/auth/Login.vue';
 
 import { useUsuario } from '@/stores/usuario'
@@ -13,7 +12,7 @@ const usuario = useUsuario()
   <div v-if="usuario.uid != ''">
     <header class="d-flex justify-content-center py-3"
       style="position:relative; z-index:10000; background-color: #282828;">
-      <NavbarOwner />
+      <Navbar />
     </header>
     <div>
       <RouterView />
