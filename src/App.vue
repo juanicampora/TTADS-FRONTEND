@@ -7,9 +7,6 @@ import Login from './views/auth/Login.vue';
 import { useUsuario } from '@/stores/usuario'
 const usuario = useUsuario()
 
-import { useRoute } from 'vue-router'
-const route = ref(useRoute());
-
 </script>
 
 <template>
