@@ -33,7 +33,7 @@ getFechasPermitidas();
 const getTopCanciones = async () => {
   try {
     console.log(fechaElegida.value)
-    const { data } = await axios.get(`http://localhost:3000/api/canciondj/topcanciones/${fechaElegida.value}`);
+    const { data } = await axios.get(`https://fiestaappapi.onrender.com/api/canciondj/topcanciones/${fechaElegida.value}`);
     console.log(data);
     canciones.value = data.data;
     tablaLista.value = true;
