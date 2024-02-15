@@ -1,11 +1,14 @@
 <script setup>
 import { RouterView } from 'vue-router'
 import Navbar from '@/components/Navbar.vue'
-import Login from './views/auth/Login.vue';
+import Login from './views/auth/Login.vue'
 
 import { useUsuario } from '@/stores/usuario'
 const usuario = useUsuario()
 
+import Toast from '@/components/Toast.vue'
+import { useAlerta } from '@/stores/alerta'
+const alerta = useAlerta()
 </script>
 
 <template>
@@ -21,6 +24,7 @@ const usuario = useUsuario()
   <div v-else>
     <Login />
   </div>
+  <Toast v-if="alerta.activa" :message="alerta.mensaje" :type="alerta.tipo" />
 </template>
 
 <style>

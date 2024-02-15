@@ -5,6 +5,9 @@ import { ref } from 'vue';
 const props = defineProps(['djEditar']);
 const emit = defineEmits(['getData', 'cerrarEditor'])
 
+import { useAlerta } from '@/stores/alerta'
+const alerta = useAlerta()
+
 const instagramIngresado = ref('');
 const nombreIngresado = ref('');
 const numeroIngresado = ref('');
@@ -29,6 +32,14 @@ const eliminarIngresado = () => {
   axios({
     method: 'delete',
     url: `https://fiestaappapi.onrender.com/api/djs/${props.djEditar.id}`,
+  }).then(() => {
+    alerta.mensaje = 'DJ eliminado';
+    alerta.tipo = 'success'
+    alerta.activar()
+  }).catch((error) => {
+    alerta.mensaje = error.message;
+    alerta.tipo = 'danger'
+    alerta.activar()
   });
   instagramIngresado.value = '';
   nombreIngresado.value = '';
@@ -41,23 +52,30 @@ const eliminarIngresado = () => {
 }
 
 const guardarIngresado = () => {
-  axios({
-    method: metodo,
-    url: url,
-    data: {
-      "nombre": nombreIngresado.value,
-      "instagram": instagramIngresado.value,
-      "tel": numeroIngresado.value,
-      "actual": esActual
-    }
-  });
-  instagramIngresado.value = '';
-  nombreIngresado.value = '';
-  numeroIngresado.value = '';
-  setTimeout(() => {
-    emit('getData');
-    emit('cerrarEditor');
-  }, 1000);
+  try {
+    axios({
+      method: metodo,
+      url: url,
+      data: {
+        "nombre": nombreIngresado.value,
+        "instagram": instagramIngresado.value,
+        "tel": numeroIngresado.value,
+        "actual": esActual
+      }
+    })
+    instagramIngresado.value = '';
+    nombreIngresado.value = '';
+    numeroIngresado.value = '';
+    setTimeout(() => {
+      emit('getData');
+      emit('cerrarEditor');
+    }, 1000);
+  } catch (error) {
+    alerta.mensaje = error.response.data.message;
+    alerta.tipo = 'danger'
+    alerta.activar()
+  }
+
 }
 
 </script>

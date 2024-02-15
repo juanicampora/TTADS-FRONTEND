@@ -2,26 +2,47 @@
 import { ref } from 'vue';
 import axios from 'axios';
 
+import { useAlerta } from '@/stores/alerta'
+const alerta = useAlerta()
+
 const cancionesIngresadas = ref("");
 
 const limpiarIngresadas = () => cancionesIngresadas.value = "";
 
 const guardarCanciones = () => {
   const canciones = cancionesIngresadas.value.split(';');
-  canciones.forEach(cancion => {
-    const cancionSplit = cancion.split('-');
-    axios({
-      method: 'post',
-      url: 'https://fiestaappapi.onrender.com/api/canciondj',
-      data: {
-        "nombre": cancionSplit[1],
-        "autor": cancionSplit[0]
-      }
+  try {
+    canciones.forEach(cancion => {
+      const cancionSplit = cancion.split('-');
+      axios({
+        method: 'post',
+        url: 'https://fiestaappapi.onrender.com/api/canciondj',
+        data: {
+          "nombre": cancionSplit[1],
+          "autor": cancionSplit[0]
+        }
+      });
     });
-  });
-  setTimeout(() => {
-    limpiarIngresadas();
-  }, 1000);
+    setTimeout(() => {
+      alerta.mensaje = "Canciones guardadas con éxito";
+      alerta.tipo = 'success'
+      alerta.activar()
+      limpiarIngresadas();
+      setTimeout(() => {
+        limpiarIngresadas();
+      }, 1000);
+    }, 3000);
+  } catch (error) {
+    if (error.response.data.message) {
+      alerta.mensaje = error.response.data.message;
+    } else { alerta.mensaje = error.message; }
+    alerta.tipo = 'danger'
+    alerta.activar()
+    setTimeout(() => {
+      limpiarIngresadas();
+    }, 1000);
+  }
+
 }
 
 </script>

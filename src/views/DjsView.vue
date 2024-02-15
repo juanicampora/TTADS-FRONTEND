@@ -6,6 +6,9 @@ import OpinionesDJ from '@/components/OpinionesDJ.vue';
 import axios from 'axios';
 import Carga from '@/components/Carga.vue';
 
+import { useAlerta } from '@/stores/alerta'
+const alerta = useAlerta()
+
 const djs = ref([]);
 const estadoEditor = ref(false);
 const estadoEditorAcceso = ref(false);
@@ -58,7 +61,11 @@ const hacerActual = (djTabla) => {
   axios({
     method: 'put',
     url: `https://fiestaappapi.onrender.com/api/djs/actual/${djTabla.id}`
-  });
+  }).catch((error) => {
+    alerta.mensaje = error.message;
+    alerta.tipo = 'danger'
+    alerta.activar()
+  })
   setTimeout(() => {
     getData();
   }, 1500);
@@ -69,7 +76,14 @@ const getData = async () => {
   try {
     esperandoAPI.value = true;
     claseEspera.value = 'disable-clicks disabled';
-    const { data } = await axios.get('https://fiestaappapi.onrender.com/api/djs');
+    const { data } = await axios.get('https://fiestaappapi.onrender.com/api/djs')
+      .catch((error) => {
+        alerta.mensaje = error.message;
+        alerta.tipo = 'danger'
+        alerta.activar()
+        esperandoAPI.value = false;
+        claseEspera.value = '';
+      })
     esperandoAPI.value = false;
     claseEspera.value = '';
     djs.value = data.data;
