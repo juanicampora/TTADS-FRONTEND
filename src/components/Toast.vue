@@ -5,7 +5,7 @@ const props = defineProps({ message: String, type: String })
 const colorNotif = ref('d-flex align-items-center bg-' + props.type);
 
 onMounted(() => {
-  const toast = new bootstrap.Toast(document.getElementById('bootstrapToast'), { autohide: true, delay: 3000 });
+  const toast = new bootstrap.Toast(document.getElementById('bootstrapToast'), { autohide: true, delay: 6000 });
   const toastElement = document.getElementById('toastContent');
   toastElement.innerText = props.message;
   toastElement.className = `toast-body text-white bg-${props.type}`;

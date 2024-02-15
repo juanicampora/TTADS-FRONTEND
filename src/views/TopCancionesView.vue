@@ -28,12 +28,13 @@ const getFechasPermitidas = async () => {
 getFechasPermitidas();
 
 //fechasPermitidas hardcodeadas generadas aleatoriamente
-//fechasPermitidas.value = ["2023/11/10", "2023/11/09"]
+//fechasPermitidas.value = ["2024/02/10", "2024/02/11"]
 
 const getTopCanciones = async () => {
   try {
     console.log(fechaElegida.value)
     const { data } = await axios.get(`https://fiestaappapi.onrender.com/api/canciondj/topcanciones/${fechaElegida.value}`);
+    console.log(data);
     canciones.value = data.data;
     tablaLista.value = true;
   } catch (error) {
@@ -41,12 +42,12 @@ const getTopCanciones = async () => {
   }
 }
 
-// obtiene fecha mm/dd/yyyy y devuelve yyyy/mm/dd
+// obtiene fecha yyyy-mm-dd y devuelve yyyy/mm/dd
 const formatearFechas = (fechas) => {
   const fechasFormateadas = [];
   fechas.forEach(fecha => {
-    const fechaFormateada = fecha.split('/');
-    fechasFormateadas.push(`${fechaFormateada[2]}/${fechaFormateada[0]}/${fechaFormateada[1]}`);
+    const fechaFormateada = fecha.split('-');
+    fechasFormateadas.push(`${fechaFormateada[0]}/${fechaFormateada[1]}/${fechaFormateada[2]}`);
   });
   return fechasFormateadas;
 }

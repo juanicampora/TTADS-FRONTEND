@@ -1,4 +1,5 @@
 <script setup>
+import GoogleImage from '@/assets/Google.png';
 import { ref } from 'vue'
 import Carga from '@/components/Carga.vue';
 import { useUsuario } from '@/stores/usuario'
@@ -61,7 +62,7 @@ const loguear = () => {
   <div class="login-page">
     <div class="form">
       <div class="login-form">
-        <button id="botonLogin" @click="loguear"><img src="Google.png"
+        <button id="botonLogin" @click="loguear"><img :src="GoogleImage"
             style="height: 50px; width: 50px; background-color: white ; margin-right: 10px;">Ingresar con Google</button>
       </div>
     </div>

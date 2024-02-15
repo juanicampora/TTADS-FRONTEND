@@ -1,22 +1,21 @@
 <script setup>
-import { ref } from 'vue'
 import { RouterView } from 'vue-router'
-import NavbarOwner from '@/components/NavbarOwner.vue'
-import Login from './views/auth/Login.vue';
+import Navbar from '@/components/Navbar.vue'
+import Login from './views/auth/Login.vue'
 
 import { useUsuario } from '@/stores/usuario'
 const usuario = useUsuario()
 
-import { useRoute } from 'vue-router'
-const route = ref(useRoute());
-
+import Toast from '@/components/Toast.vue'
+import { useAlerta } from '@/stores/alerta'
+const alerta = useAlerta()
 </script>
 
 <template>
   <div v-if="usuario.uid != ''">
     <header class="d-flex justify-content-center py-3"
       style="position:relative; z-index:10000; background-color: #282828;">
-      <NavbarOwner />
+      <Navbar />
     </header>
     <div>
       <RouterView />
@@ -25,6 +24,7 @@ const route = ref(useRoute());
   <div v-else>
     <Login />
   </div>
+  <Toast v-if="alerta.activa" :message="alerta.mensaje" :type="alerta.tipo" />
 </template>
 
 <style>

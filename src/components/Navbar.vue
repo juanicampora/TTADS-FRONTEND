@@ -9,11 +9,11 @@ const usuario = ref(useUsuario())
   <div class="container">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
       <div class="col-md-3 mb-md-0">
-        <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
+        <RouterLink class="nav-link d-inline-flex link-body-emphasis text-decoration-none" to="/">
           <span class="material-symbols-outlined" style="color:#198754; font-size: xx-large;">
             celebration
           </span>
-        </a>
+        </RouterLink>
       </div>
 
       <ul class="nav nav-pills col-12 col-md-auto mb-2 justify-content-center mb-md-0">
@@ -31,7 +31,7 @@ const usuario = ref(useUsuario())
               class="bi bi-headphones"></i>
             Menu DJs</a>
           <ul class="dropdown-menu">
-            <li class="dropdown-item" v-if="usuario.tipo == 'Admin' || usuario.tipo == 'Dj'">
+            <li class="dropdown-item" v-if="usuario.tipo == 'Admin'">
               <RouterLink class="nav-link " to="/djs">DJs</RouterLink>
             </li>
             <li class="dropdown-item" v-if="usuario.tipo == 'Admin' || usuario.tipo == 'Dj'">
@@ -93,3 +93,4 @@ const usuario = ref(useUsuario())
   color: #1987549f;
 }
 </style>
+
