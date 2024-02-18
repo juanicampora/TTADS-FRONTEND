@@ -1,11 +1,28 @@
 <script setup>
 import { ref } from 'vue';
 import axios from 'axios';
+import Carga from '@/components/Carga.vue';
 
 import { useAlerta } from '@/stores/alerta'
 const alerta = useAlerta()
 
+import { useUsuario } from '@/stores/usuario'
+const usuario = useUsuario()
+
 const cancionesIngresadas = ref("");
+const esperandoAPI = ref(false);
+
+const verificarDjActual = async () => {
+  try {
+    const { data } = await axios.get(`https://fiestaappapi.onrender.com/api/usuario/esdjactual/${usuario.uid}`)
+    console.log(data);
+    esperandoAPI.value = false;
+  } catch (error) {
+    console.log(error);
+    esperandoAPI.value = false;
+  }
+
+}
 
 const limpiarIngresadas = () => cancionesIngresadas.value = "";
 
@@ -42,12 +59,13 @@ const guardarCanciones = () => {
       limpiarIngresadas();
     }, 1000);
   }
-
 }
 
+verificarDjActual();
 </script>
 
 <template>
+  <Carga v-if="esperandoAPI" />
   <div class="container py-4 rounded mt-3" style="background-color: gray;">
     <div>
       <h1 class="text-center display-5 fw-bold text-body-emphasis mb-3">Carga Canciones</h1>

@@ -3,6 +3,10 @@ import GoogleImage from '@/assets/Google.png';
 import { ref } from 'vue'
 import Carga from '@/components/Carga.vue';
 import { useUsuario } from '@/stores/usuario'
+
+import { useAlerta } from '@/stores/alerta'
+const alerta = useAlerta()
+
 const usuario = useUsuario()
 const esperando = ref(false)
 // Firebase
@@ -18,6 +22,7 @@ const firebaseConfig = {
 const appfirebase = initializeApp(firebaseConfig);
 // Firebase GoogleAuth
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import axios from 'axios';
 const pasarC = () => {
   usuario.tipo = 'Cliente'
   usuario.uid = 'aaaa';
@@ -43,8 +48,29 @@ const loguear = () => {
       usuario.uid = result.user.uid;
       usuario.name = result.user.displayName;
       usuario.mail = result.user.email;
-      //Mandar con la API para loguear y obtener el tipo de usuario
-      usuario.tipo = 'Cliente' //cambiar por el tipo que devuelve la API
+      axios({
+        method: 'post',
+        url: 'https://fiestaappapi.onrender.com/api/usuarios/login',
+        data: {
+          "uid": usuario.uid,
+          "nombre": usuario.name,
+          "mail": usuario.mail
+        }
+      }).then((data) => {
+        usuario.tipo = data.data.data.tipo;
+        esperando.value = false;
+      }).catch((error) => {
+        console.log('Hubo un error con la API');
+        console.log(error);
+        usuario.uid = '';
+        usuario.name = '';
+        usuario.mail = '';
+        if (error.response.data.message) {
+          alerta.mensaje = error.response.data.message;
+        } else { alerta.mensaje = error.message; }
+        alerta.tipo = 'danger'
+        alerta.activar()
+      });
       esperando.value = false;
     }).catch((error) => {
       // Handle Errors here.
