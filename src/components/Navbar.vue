@@ -24,6 +24,9 @@ const usuario = ref(useUsuario())
             <li class="dropdown-item">
               <RouterLink class="nav-link " to="/nuevanoche">Nueva Noche</RouterLink>
             </li>
+            <li class="dropdown-item" v-if="usuario.tipo == 'Admin'">
+              <RouterLink class="nav-link " to="/djs">Gestionar DJs</RouterLink>
+            </li>
           </ul>
         </li>
         <li class="nav-item dropdown">
@@ -31,11 +34,11 @@ const usuario = ref(useUsuario())
               class="bi bi-headphones"></i>
             Menu DJs</a>
           <ul class="dropdown-menu">
-            <li class="dropdown-item" v-if="usuario.tipo == 'Admin'">
-              <RouterLink class="nav-link " to="/djs">DJs</RouterLink>
+            <li class="dropdown-item" v-if="usuario.tipo == 'Admin' || usuario.tipo == 'Dj'">
+              <RouterLink class="nav-link " to="/cargacancionesdj">Cargar canciones</RouterLink>
             </li>
             <li class="dropdown-item" v-if="usuario.tipo == 'Admin' || usuario.tipo == 'Dj'">
-              <RouterLink class="nav-link " to="/cargacancionesdj">Carga Canciones DJ</RouterLink>
+              <RouterLink class="nav-link " to="/cancionesdj">Canciones cargadas</RouterLink>
             </li>
             <li class="dropdown-item" v-if="usuario.tipo == 'Admin' || usuario.tipo == 'Cliente'">
               <RouterLink class="nav-link" to="/opiniondj">Opinar Dj</RouterLink>

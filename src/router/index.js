@@ -37,6 +37,12 @@ const router = createRouter({
       meta: { roles: ['Admin','Dj'] }
     },
     {
+      path: '/cancionesdj',
+      name: 'cancionesdj',
+      component: () => import('../views/CancionesDjView.vue'),
+      meta: { roles: ['Admin','Dj'] }
+    },
+    {
       path: '/topcanciones',
       name: 'topcanciones',
       component: () => import('../views/TopCancionesView.vue'),
@@ -70,7 +76,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const usuario = useUsuario()
   if (to.meta.roles && !to.meta.roles.includes(usuario.tipo)) {
-      next('/denegado');
+      next('/');
   } else {
     next();
   }
