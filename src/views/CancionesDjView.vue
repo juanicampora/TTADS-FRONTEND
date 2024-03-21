@@ -18,6 +18,7 @@ const nombreIngresado = ref('');
 const autorIngresado = ref('');
 const esperandoAPI = ref(false);
 const claseEspera = ref('');
+const habilitado = ref(false);
 
 const activarEditor = (id, cancionTabla) => {
   estadoEditor.value = false;
@@ -50,7 +51,6 @@ const eliminarCancion = (idCancion) => {
     method: 'delete',
     url: `http://localhost:3000/api/canciondj/${idCancion}`,
   }).then((response) => {
-    console.log(response);
     alerta.mensaje = response.data.message;
     if (response.status == 200) {
       alerta.tipo = 'success'
@@ -70,23 +70,42 @@ const eliminarCancion = (idCancion) => {
 const getData = async () => {
   try {
     esperandoAPI.value = true;
-    claseEspera.value = 'disable-clicks';
-    const { data } = await axios.get(`http://localhost:3000/api/canciondj/${usuario.uid}`);
-    if (data.data.length === 0) {
-      alerta.mensaje = "No hay canciones cargadas";
-      alerta.tipo = 'warning'
+    const { data } = await axios.get(`http://localhost:3000/api/usuarios/esdjactual/${usuario.uid}`)
+    const esActual = data.esActual;
+    const { data: data2 } = await axios.get(`http://localhost:3000/api/djs/getFechaActual/${usuario.uid}`)
+    const fechaActual = data2.fechaActual;
+    const hoy = new Date(
+      new Date().getFullYear(),
+      new Date().getMonth(),
+      new Date().getDate()).toISOString().split('T')[0]
+    if (fechaActual === hoy && esActual) { habilitado.value = true; }
+    else { habilitado.value = false; }
+    esperandoAPI.value = false;
+  } catch (error) {
+    console.log(error);
+    esperandoAPI.value = false;
+  }
+  if (habilitado.value) {
+    try {
+      esperandoAPI.value = true;
+      claseEspera.value = 'disable-clicks';
+      const { data } = await axios.get(`http://localhost:3000/api/canciondj/${usuario.uid}`);
+      if (data.data.length === 0) {
+        alerta.mensaje = "No hay canciones cargadas";
+        alerta.tipo = 'warning'
+        alerta.activar()
+      }
+      canciones.value = data.data;
+      esperandoAPI.value = false;
+      claseEspera.value = '';
+    } catch (error) {
+      console.log(error)
+      esperandoAPI.value = false;
+      claseEspera.value = '';
+      alerta.mensaje = "Error al obtener las canciones";
+      alerta.tipo = 'danger'
       alerta.activar()
     }
-    canciones.value = data.data;
-    esperandoAPI.value = false;
-    claseEspera.value = '';
-  } catch (error) {
-    console.log(error)
-    esperandoAPI.value = false;
-    claseEspera.value = '';
-    alerta.mensaje = "Error al obtener las canciones";
-    alerta.tipo = 'danger'
-    alerta.activar()
   }
 };
 
@@ -103,7 +122,7 @@ getData();
   <div :class="claseEspera">
     <div class="container py-4 rounded mt-3" style="background-color: gray;">
       <h1 class="text-center display-5 fw-bold text-body-emphasis mb-3">Tus canciones de la noche actual</h1>
-      <div class="table-responsive mx-4">
+      <div class="table-responsive mx-4" v-if="habilitado">
         <table class="table">
           <thead>
             <th>Nombre de la Cancion</th>
@@ -115,7 +134,8 @@ getData();
             <tr class="table-success">
               <td><input type="text" class="form-control" placeholder="Nombre Cancion Nueva" v-model="nombreIngresado">
               </td>
-              <td><input type="text" class="form-control" placeholder="Autor Cancion Nueva" v-model="autorIngresado"></td>
+              <td><input type="text" class="form-control" placeholder="Autor Cancion Nueva" v-model="autorIngresado">
+              </td>
               <td></td>
               <td class="d-flex justify-content-end"><button class=" btn btn-success" style="width:82px;"
                   @click="guardarCancion"><i class="bi bi-plus-lg"></i></button></td>
@@ -135,6 +155,10 @@ getData();
             </tr>
           </tbody>
         </table>
+      </div>
+      <div class="mx-4" v-else>
+        <h5 class="mb-4 text-center text-danger-emphasis">No hay canciones para visualizar porque no esta habilitado
+          como DJ de esta noche</h5>
       </div>
     </div>
   </div>

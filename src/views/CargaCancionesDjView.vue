@@ -17,8 +17,14 @@ const verificarDjActual = async () => {
   try {
     esperandoAPI.value = true;
     const { data } = await axios.get(`http://localhost:3000/api/usuarios/esdjactual/${usuario.uid}`)
-    console.log(data);
-    if (data.esActual) { habilitado.value = true; }
+    const esActual = data.esActual;
+    const { data: data2 } = await axios.get(`http://localhost:3000/api/djs/getFechaActual/${usuario.uid}`)
+    const fechaActual = data2.fechaActual;
+    const hoy = new Date(
+      new Date().getFullYear(),
+      new Date().getMonth(),
+      new Date().getDate()).toISOString().split('T')[0]
+    if (fechaActual === hoy && esActual) { habilitado.value = true; }
     else { habilitado.value = false; }
     esperandoAPI.value = false;
   } catch (error) {
@@ -29,42 +35,38 @@ const verificarDjActual = async () => {
 
 const limpiarIngresadas = () => cancionesIngresadas.value = "";
 
-const guardarCanciones = () => {
+const guardarCanciones = async () => {
   esperandoAPI.value = true;
   const canciones = cancionesIngresadas.value.split(';');
-  try {
-    canciones.forEach(cancion => {
-      const cancionSplit = cancion.split('-');
-      axios({
-        method: 'post',
-        url: 'https://fiestaappapi.onrender.com/api/canciondj',
-        data: {
-          "nombre": cancionSplit[1],
-          "autor": cancionSplit[0]
-        }
+  for (const cancion of canciones) {
+    const cancionSplit = cancion.split('-');
+    try {
+      await axios.post('http://localhost:3000/api/canciondj', {
+        "nombre": cancionSplit[1],
+        "autor": cancionSplit[0]
       });
-    });
-    setTimeout(() => {
-      alerta.mensaje = "Canciones guardadas con éxito";
-      alerta.tipo = 'success'
+    } catch (error) {
+      console.log(error);
+      alerta.mensaje = error.message;
+      alerta.tipo = 'danger'
       alerta.activar()
-      limpiarIngresadas();
       setTimeout(() => {
         limpiarIngresadas();
         esperandoAPI.value = false;
       }, 1000);
-    }, 3000);
-  } catch (error) {
-    if (error.response.data.message) {
-      alerta.mensaje = error.response.data.message;
-    } else { alerta.mensaje = error.message; }
-    alerta.tipo = 'danger'
+      return;
+    }
+  }
+  setTimeout(() => {
+    alerta.mensaje = "Canciones guardadas con éxito";
+    alerta.tipo = 'success'
     alerta.activar()
+    limpiarIngresadas();
     setTimeout(() => {
       limpiarIngresadas();
       esperandoAPI.value = false;
     }, 1000);
-  }
+  }, 3000);
 }
 
 verificarDjActual();
@@ -85,8 +87,8 @@ verificarDjActual();
         </div>
       </div>
       <div class="mx-4" v-else>
-        <h5 class="mb-4 text-center text-danger-emphasis">Como usted no es el dj actual, no puede cargar canciones ahora
-        </h5>
+        <h5 class="mb-4 text-center text-danger-emphasis">No puede cargar canciones porque no esta habilitado como DJ de
+          esta noche</h5>
       </div>
     </div>
   </div>

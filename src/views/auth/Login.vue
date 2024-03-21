@@ -38,7 +38,7 @@ const pasarD = () => {
   usuario.uid = 'aaaa';
   usuario.name = 'Dj';
 }
-const loguear = () => {
+const loguear = async () => {
   esperando.value = true;
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
@@ -50,7 +50,7 @@ const loguear = () => {
       usuario.mail = result.user.email;
       axios({
         method: 'post',
-        url: 'https://fiestaappapi.onrender.com/api/usuarios/login',
+        url: 'http://localhost:3000/api/usuarios/login',
         data: {
           "uid": usuario.uid,
           "nombre": usuario.name,
@@ -70,8 +70,8 @@ const loguear = () => {
         } else { alerta.mensaje = error.message; }
         alerta.tipo = 'danger'
         alerta.activar()
+        esperando.value = false;
       });
-      esperando.value = false;
     }).catch((error) => {
       // Handle Errors here.
       console.log('Hubo un error con firebase');
@@ -79,6 +79,7 @@ const loguear = () => {
       const errorMessage = error.message;
       esperando.value = false;
     });
+  console.log(usuario.tipo)
 }
 
 </script>
@@ -89,7 +90,8 @@ const loguear = () => {
     <div class="form">
       <div class="login-form">
         <button id="botonLogin" @click="loguear"><img :src="GoogleImage"
-            style="height: 50px; width: 50px; background-color: white ; margin-right: 10px;">Ingresar con Google</button>
+            style="height: 50px; width: 50px; background-color: white ; margin-right: 10px;">Ingresar con
+          Google</button>
       </div>
     </div>
   </div>
