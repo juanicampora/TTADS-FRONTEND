@@ -2,12 +2,15 @@
 import axios from 'axios'
 import { ref } from 'vue';
 import Carga from '@/components/Carga.vue';
+const esperandoAPI = ref(false);
+
+import { useAlerta } from '@/stores/alerta'
+const alerta = useAlerta()
 
 const props = defineProps(['djOpiniones']);
 const emit = defineEmits(['cerrarOpiniones'])
 
 const opiniones = ref([]);
-const esperandoAPI = ref(false);
 
 const getOpiniones = async () => {
   try {
@@ -16,8 +19,10 @@ const getOpiniones = async () => {
     opiniones.value = data.data;
     esperandoAPI.value = false;
   } catch (error) {
+    alerta.mensaje = error.message;
+    alerta.tipo = 'danger'
+    alerta.activar()
     esperandoAPI.value = false;
-    console.log(error)
   }
 };
 
@@ -26,10 +31,15 @@ const eliminarOpinion = async (idOpinion) => {
     esperandoAPI.value = true;
     await axios.delete(`https://fiestaappapi.onrender.com/api/djs/opinion/${idOpinion}`);
     esperandoAPI.value = false;
+    alerta.mensaje = 'Opinión eliminada.';
+    alerta.tipo = 'success'
+    alerta.activar()
     getOpiniones();
   } catch (error) {
+    alerta.mensaje = error.message;
+    alerta.tipo = 'danger'
+    alerta.activar()
     esperandoAPI.value = false;
-    console.log(error)
   }
 };
 

@@ -66,6 +66,9 @@ const guardarIngresado = () => {
     instagramIngresado.value = '';
     nombreIngresado.value = '';
     numeroIngresado.value = '';
+    alerta.mensaje = 'Datos del DJ guardados';
+    alerta.tipo = 'success'
+    alerta.activar()
     setTimeout(() => {
       emit('getData');
       emit('cerrarEditor');

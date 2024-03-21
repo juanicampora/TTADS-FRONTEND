@@ -1,14 +1,15 @@
 ## Alerta
 
-import Toast from '@/components/Toast.vue';
-const alerta = ref(false);
+import { useAlerta } from '@/stores/alerta'
+const alerta = useAlerta()
 
-mensaje.value = error.message;
-tipo.value = 'danger'
-alerta.value = false;
-setTimeout(() => {
-alerta.value = true;
-}, 10);
+alerta.mensaje = 'Exito';
+alerta.tipo = 'success'
+alerta.activar()
+
+alerta.mensaje = error.message;
+alerta.tipo = 'danger'
+alerta.activar()
 
 <Toast v-if="alerta" :message="mensaje" :type="tipo" />
 

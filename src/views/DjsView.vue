@@ -63,11 +63,15 @@ const hacerActual = (djTabla) => {
   axios({
     method: 'put',
     url: `https://fiestaappapi.onrender.com/api/djs/actual/${djTabla.id}`
+  }).then((response) => {
+    alerta.mensaje = 'Nuevo dj actualizado. Recuerde accionar "Nueva noche".';
+    alerta.tipo = 'success'
+    alerta.activar()
   }).catch((error) => {
     alerta.mensaje = error.message;
     alerta.tipo = 'danger'
     alerta.activar()
-  })
+  });
   setTimeout(() => {
     getData();
   }, 1500);
