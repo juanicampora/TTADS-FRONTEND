@@ -50,7 +50,7 @@ const loguear = async () => {
       usuario.mail = result.user.email;
       axios({
         method: 'post',
-        url: 'http://localhost:3000/api/usuarios/login',
+        url: 'https://fiestaappapi.onrender.com/api/usuarios/login',
         data: {
           "uid": usuario.uid,
           "nombre": usuario.name,

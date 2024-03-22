@@ -33,7 +33,7 @@ const activarEditor = (id, cancionTabla) => {
 const guardarCancion = () => {
   axios({
     method: 'post',
-    url: 'http://localhost:3000/api/canciondj',
+    url: 'https://fiestaappapi.onrender.com/api/canciondj',
     data: {
       "nombre": nombreIngresado.value,
       "autor": autorIngresado.value
@@ -49,7 +49,7 @@ const guardarCancion = () => {
 const eliminarCancion = (idCancion) => {
   axios({
     method: 'delete',
-    url: `http://localhost:3000/api/canciondj/${idCancion}`,
+    url: `https://fiestaappapi.onrender.com/api/canciondj/${idCancion}`,
   }).then((response) => {
     alerta.mensaje = response.data.message;
     if (response.status == 200) {
@@ -70,9 +70,9 @@ const eliminarCancion = (idCancion) => {
 const getData = async () => {
   try {
     esperandoAPI.value = true;
-    const { data } = await axios.get(`http://localhost:3000/api/usuarios/esdjactual/${usuario.uid}`)
+    const { data } = await axios.get(`https://fiestaappapi.onrender.com/api/usuarios/esdjactual/${usuario.uid}`)
     const esActual = data.esActual;
-    const { data: data2 } = await axios.get(`http://localhost:3000/api/djs/getFechaActual/${usuario.uid}`)
+    const { data: data2 } = await axios.get(`https://fiestaappapi.onrender.com/api/djs/getFechaActual/${usuario.uid}`)
     const fechaActual = data2.fechaActual;
     const hoy = new Date(
       new Date().getFullYear(),
@@ -89,7 +89,7 @@ const getData = async () => {
     try {
       esperandoAPI.value = true;
       claseEspera.value = 'disable-clicks';
-      const { data } = await axios.get(`http://localhost:3000/api/canciondj/${usuario.uid}`);
+      const { data } = await axios.get(`https://fiestaappapi.onrender.com/api/canciondj/${usuario.uid}`);
       if (data.data.length === 0) {
         alerta.activar('No hay canciones cargadas', 'warning')
       }

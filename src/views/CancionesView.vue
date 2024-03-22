@@ -25,7 +25,7 @@ const activarEditor = (cancionTabla) => {
 const guardarCancion = () => {
   axios({
     method: 'post',
-    url: 'http://localhost:3000/api/canciones',
+    url: 'https://fiestaappapi.onrender.com/api/canciones',
     data: {
       "nombre": nombreIngresado.value,
       "autor": autorIngresado.value
@@ -41,7 +41,7 @@ const guardarCancion = () => {
 const eliminarCancion = (idCancion) => {
   axios({
     method: 'delete',
-    url: `http://localhost:3000/api/canciones/${idCancion}`,
+    url: `https://fiestaappapi.onrender.com/api/canciones/${idCancion}`,
   });
   setTimeout(() => {
     getData();
@@ -52,7 +52,7 @@ const getData = async () => {
   try {
     esperandoAPI.value = true;
     claseEspera.value = 'disable-clicks';
-    const { data } = await axios.get('http://localhost:3000/api/canciones');
+    const { data } = await axios.get('https://fiestaappapi.onrender.com/api/canciones');
     canciones.value = data.data;
     esperandoAPI.value = false;
     claseEspera.value = '';

@@ -16,9 +16,9 @@ puntajeIngresado.value = props.cancionEditar.puntaje;
 
 const guardarIngresado = () => {
   if (props.tipoEditar == 'cancion') {
-    urlElegida.value = `http://localhost:3000/api/canciones/${props.cancionEditar.id}`;
+    urlElegida.value = `https://fiestaappapi.onrender.com/api/canciones/${props.cancionEditar.id}`;
   } else if (props.tipoEditar == 'canciondj') {
-    urlElegida.value = `http://localhost:3000/api/canciondj/${props.idCancionDj}`;
+    urlElegida.value = `https://fiestaappapi.onrender.com/api/canciondj/${props.idCancionDj}`;
   }
   axios({
     method: 'put',
