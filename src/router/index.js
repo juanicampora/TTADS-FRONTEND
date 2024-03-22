@@ -69,6 +69,11 @@ const router = createRouter({
       path: '/denegado',
       name: 'Denegado',
       component: () => import('../views/DenegadoView.vue')
+    },
+    {
+      path: '/error',
+      name: 'Error',
+      component: () => import('../views/ErrorView.vue')
     }
   ]
 })

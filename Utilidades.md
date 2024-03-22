@@ -7,9 +7,13 @@ alerta.mensaje = 'Exito';
 alerta.tipo = 'success'
 alerta.activar()
 
+alerta.activar('','success')
+
 alerta.mensaje = error.message;
 alerta.tipo = 'danger'
 alerta.activar()
+
+alerta.activar(error.message,'danger')
 
 <Toast v-if="alerta" :message="mensaje" :type="tipo" />
 

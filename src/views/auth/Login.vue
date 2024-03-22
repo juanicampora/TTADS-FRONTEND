@@ -62,14 +62,15 @@ const loguear = async () => {
       }).catch((error) => {
         console.log('Hubo un error con la API');
         console.log(error);
+        if (error.response && error.response.data && error.response.data.message) {
+          alerta.mensaje = error.response.data.message;
+        } else if (error.message == 'Network Error') { alerta.mensaje = 'Error de conexión al Servidor' }
+        else { alerta.mensaje = error.message; }
+        alerta.tipo = 'danger'
+        alerta.activar()
         usuario.uid = '';
         usuario.name = '';
         usuario.mail = '';
-        if (error.response.data.message) {
-          alerta.mensaje = error.response.data.message;
-        } else { alerta.mensaje = error.message; }
-        alerta.tipo = 'danger'
-        alerta.activar()
         esperando.value = false;
       });
     }).catch((error) => {
@@ -77,9 +78,10 @@ const loguear = async () => {
       console.log('Hubo un error con firebase');
       const errorCode = error.code;
       const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+      alerta.activar(errorMessage, 'danger')
       esperando.value = false;
     });
-  console.log(usuario.tipo)
 }
 
 </script>

@@ -91,9 +91,7 @@ const getData = async () => {
       claseEspera.value = 'disable-clicks';
       const { data } = await axios.get(`http://localhost:3000/api/canciondj/${usuario.uid}`);
       if (data.data.length === 0) {
-        alerta.mensaje = "No hay canciones cargadas";
-        alerta.tipo = 'warning'
-        alerta.activar()
+        alerta.activar('No hay canciones cargadas', 'warning')
       }
       canciones.value = data.data;
       esperandoAPI.value = false;
@@ -102,9 +100,7 @@ const getData = async () => {
       console.log(error)
       esperandoAPI.value = false;
       claseEspera.value = '';
-      alerta.mensaje = "Error al obtener las canciones";
-      alerta.tipo = 'danger'
-      alerta.activar()
+      alerta.activar('Error al obtener las canciones', 'danger')
     }
   }
 };

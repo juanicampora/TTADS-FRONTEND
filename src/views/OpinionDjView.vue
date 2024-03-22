@@ -17,15 +17,11 @@ const enviarOpinion = async () => {
   if (OpinionDj.value != "") {
     try {
       await axios.post('https://fiestaappapi.onrender.com/api/djs/opinion', { "opinion": OpinionDj.value });
-      alerta.mensaje = 'Opinión enviada correctamente';
-      alerta.tipo = 'success'
-      alerta.activar()
+      alerta.activar('Opinión enviada correctamente', 'success')
       limpiarOpinion();
     } catch (error) {
       console.log(error);
-      alerta.mensaje = error.response.data.message;
-      alerta.tipo = 'danger'
-      alerta.activar()
+      alerta.activar(error.message, 'danger')
     }
   }
   esperandoAPI.value = false;

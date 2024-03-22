@@ -27,9 +27,7 @@ const getMailDj = () => {
       esperandoAPI.value = false;
     });
   } catch (error) {
-    alerta.mensaje = error.message;
-    alerta.tipo = 'danger'
-    alerta.activar()
+    alerta.activar(error.message, 'danger')
     esperandoAPI.value = false;
   }
 }
@@ -43,13 +41,9 @@ const guardarIngresado = () => {
       "idDj": props.djEditar.id
     }
   }).then((response) => {
-    alerta.mensaje = 'Mail de acceso guardado';
-    alerta.tipo = 'success'
-    alerta.activar()
+    alerta.activar('Mail de acceso guardado', 'success')
   }).catch((error) => {
-    alerta.mensaje = error.message;
-    alerta.tipo = 'danger'
-    alerta.activar()
+    alerta.activar(error.message, 'danger')
   })
   emailAcceso.value = '';
   setTimeout(() => {

@@ -19,9 +19,7 @@ const getOpiniones = async () => {
     opiniones.value = data.data;
     esperandoAPI.value = false;
   } catch (error) {
-    alerta.mensaje = error.message;
-    alerta.tipo = 'danger'
-    alerta.activar()
+    alerta.activar(error.message, 'danger')
     esperandoAPI.value = false;
   }
 };
@@ -31,14 +29,10 @@ const eliminarOpinion = async (idOpinion) => {
     esperandoAPI.value = true;
     await axios.delete(`https://fiestaappapi.onrender.com/api/djs/opinion/${idOpinion}`);
     esperandoAPI.value = false;
-    alerta.mensaje = 'Opinión eliminada.';
-    alerta.tipo = 'success'
-    alerta.activar()
+    alerta.activar('Opinión eliminada', 'success')
     getOpiniones();
   } catch (error) {
-    alerta.mensaje = error.message;
-    alerta.tipo = 'danger'
-    alerta.activar()
+    alerta.activar(error.message, 'danger')
     esperandoAPI.value = false;
   }
 };

@@ -47,9 +47,7 @@ const guardarCanciones = async () => {
       });
     } catch (error) {
       console.log(error);
-      alerta.mensaje = error.message;
-      alerta.tipo = 'danger'
-      alerta.activar()
+      alerta.activar(error.message, 'danger')
       setTimeout(() => {
         limpiarIngresadas();
         esperandoAPI.value = false;
@@ -58,9 +56,7 @@ const guardarCanciones = async () => {
     }
   }
   setTimeout(() => {
-    alerta.mensaje = "Canciones guardadas con éxito";
-    alerta.tipo = 'success'
-    alerta.activar()
+    alerta.activar('Canciones guardadas con éxito', 'success')
     limpiarIngresadas();
     setTimeout(() => {
       limpiarIngresadas();
