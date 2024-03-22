@@ -5,8 +5,14 @@ export const useAlerta = defineStore('alerta', () => {
   const activa = ref(false)
   const mensaje = ref('')
   const tipo = ref('')
-  const activar = () => {
+  const activar = (mensajeIng='',tipoIng='') => {
     activa.value = false;
+    if (mensajeIng != '') {
+      mensaje.value = mensajeIng;
+    }
+    if (tipoIng != ''){
+      tipo.value = tipoIng;
+    } 
     setTimeout(() => {
       activa.value = true;
     }, 10);

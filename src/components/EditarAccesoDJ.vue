@@ -1,13 +1,18 @@
 <script setup>
 import axios from 'axios'
 import { ref } from 'vue';
+
 import Carga from '@/components/Carga.vue';
+const esperandoAPI = ref(false);
+
+import { useAlerta } from '@/stores/alerta'
+const alerta = useAlerta()
 
 const props = defineProps(['djEditar']);
 const emit = defineEmits(['getData', 'cerrarEditor'])
 
 const emailAcceso = ref('');
-const esperandoAPI = ref(false);
+
 
 const getMailDj = () => {
   esperandoAPI.value = true;
@@ -22,8 +27,8 @@ const getMailDj = () => {
       esperandoAPI.value = false;
     });
   } catch (error) {
+    alerta.activar(error.message, 'danger')
     esperandoAPI.value = false;
-    console.log(error)
   }
 }
 
@@ -35,7 +40,11 @@ const guardarIngresado = () => {
       "mail": emailAcceso.value,
       "idDj": props.djEditar.id
     }
-  });
+  }).then((response) => {
+    alerta.activar('Mail de acceso guardado', 'success')
+  }).catch((error) => {
+    alerta.activar(error.message, 'danger')
+  })
   emailAcceso.value = '';
   setTimeout(() => {
     emit('getData');
@@ -51,7 +60,7 @@ getMailDj();
   <div class="container py-4 rounded my-3" style="background-color: gray;">
     <div>
       <h6 class="text-center display-6 fw-bold text-body-emphasis">Gmail de acceso para {{
-        djEditar.nombre }}</h6>
+    djEditar.nombre }}</h6>
       <div class="col-lg-6 mx-auto">
         <input class="form-control mt-3" type="email" placeholder="Ingrese un Gmail" v-model="emailAcceso">
         <div class="mt-3 d-flex justify-content-evenly">

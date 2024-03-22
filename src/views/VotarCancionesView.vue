@@ -2,6 +2,8 @@
 import { ref } from 'vue';
 import axios from 'axios';
 import Carga from '@/components/Carga.vue';
+import { useUsuario } from '@/stores/usuario'
+const usuario = useUsuario()
 
 const canciones = ref([]);
 
@@ -34,8 +36,12 @@ const votarCanciones = () => {
   idSeleccionados.value.forEach(id => {
     axios({
       method: 'put',
-      url: `https://fiestaappapi.onrender.com/api/canciondj/${id}/votacion`
+      url: `https://fiestaappapi.onrender.com/api/canciondj/votacion/${id}`
     });
+  });
+  axios({
+    method: 'put',
+    url: `https://fiestaappapi.onrender.com/api/usuarios/voto/${usuario.uid}`
   });
   setTimeout(() => {
     limpiarSeleccion();

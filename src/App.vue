@@ -9,9 +9,12 @@ const usuario = useUsuario()
 import Toast from '@/components/Toast.vue'
 import { useAlerta } from '@/stores/alerta'
 const alerta = useAlerta()
+
+import Carga from '@/components/Carga.vue';
 </script>
 
 <template>
+  <Carga v-if="usuario.esperaUsuario" />
   <div v-if="usuario.uid != ''">
     <header class="d-flex justify-content-center py-3"
       style="position:relative; z-index:10000; background-color: #282828;">

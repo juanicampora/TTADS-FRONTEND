@@ -41,17 +41,13 @@ getData();
 const nuevaNoche = async () => {
   try {
     const { data } = await axios.get('https://fiestaappapi.onrender.com/api/canciondj/nuevanoche')
-    alerta.mensaje = data.message;
-    alerta.tipo = 'success'
-    alerta.activar()
+    alerta.activar(data.message, 'success')
     esperandoAPI.value = true;
     setTimeout(() => {
       getData();
     }, 1500);
   } catch (error) {
-    alerta.mensaje = error.message;
-    alerta.tipo = 'danger'
-    alerta.activar()
+    alerta.activar(error.message, 'danger')
   }
 }
 
@@ -65,7 +61,8 @@ const nuevaNoche = async () => {
       <h1 class="text-center display-5 fw-bold text-body-emphasis mb-3">Nueva Noche</h1>
       <div class="mx-4 text-center">
         <div v-if="!yaEsActual">
-          <div class="row border rounded p-4 mb-2 text-warning-emphasis border-warning" style="--bs-border-opacity: 0.3;">
+          <div class="row border rounded p-4 mb-2 text-warning-emphasis border-warning"
+            style="--bs-border-opacity: 0.3;">
             <h3 class="mb-0">DJ Actual: {{ djActual.nombre }}</h3>
           </div>
           <h5>Para crear una nueva noche pulse el siguiente boton </h5>

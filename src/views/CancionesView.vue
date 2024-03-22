@@ -7,6 +7,7 @@ import Carga from '@/components/Carga.vue';
 const canciones = ref([]);
 const estadoEditor = ref(false);
 const cancionEditar = ref(0);
+const tipoEditar = 'cancion';
 const nombreIngresado = ref('');
 const autorIngresado = ref('');
 const esperandoAPI = ref(false);
@@ -24,7 +25,7 @@ const activarEditor = (cancionTabla) => {
 const guardarCancion = () => {
   axios({
     method: 'post',
-    url: 'https://fiestaappapi.onrender.com/api/canciones',
+    url: 'http://localhost:3000/api/canciones',
     data: {
       "nombre": nombreIngresado.value,
       "autor": autorIngresado.value
@@ -40,7 +41,7 @@ const guardarCancion = () => {
 const eliminarCancion = (idCancion) => {
   axios({
     method: 'delete',
-    url: `https://fiestaappapi.onrender.com/api/canciones/${idCancion}`,
+    url: `http://localhost:3000/api/canciones/${idCancion}`,
   });
   setTimeout(() => {
     getData();
@@ -51,7 +52,7 @@ const getData = async () => {
   try {
     esperandoAPI.value = true;
     claseEspera.value = 'disable-clicks';
-    const { data } = await axios.get('https://fiestaappapi.onrender.com/api/canciones');
+    const { data } = await axios.get('http://localhost:3000/api/canciones');
     canciones.value = data.data;
     esperandoAPI.value = false;
     claseEspera.value = '';
@@ -67,8 +68,8 @@ getData();
 <template>
   <Carga v-if="esperandoAPI" />
   <div>
-    <EditarCancion v-if="estadoEditor" :cancionEditar="cancionEditar" @cerrarEditor="estadoEditor = false"
-      @getData="getData" />
+    <EditarCancion v-if="estadoEditor" idCancionDj='' tipoEditar='cancion' :cancionEditar="cancionEditar"
+      @cerrarEditor="estadoEditor = false" @getData="getData" />
   </div>
   <div :class="claseEspera">
     <div class="container py-4 rounded mt-3" style="background-color: gray;">
@@ -85,12 +86,13 @@ getData();
             <tr class="table-success">
               <td><input type="text" class="form-control" placeholder="Nombre Cancion Nueva" v-model="nombreIngresado">
               </td>
-              <td><input type="text" class="form-control" placeholder="Autor Cancion Nueva" v-model="autorIngresado"></td>
+              <td><input type="text" class="form-control" placeholder="Autor Cancion Nueva" v-model="autorIngresado">
+              </td>
               <td></td>
               <td class="d-flex justify-content-end"><button class=" btn btn-success" style="width:82px;"
                   @click="guardarCancion"><i class="bi bi-plus-lg"></i></button></td>
             </tr>
-            <tr v-for="cancion in canciones" :key="cancion.idCancion">
+            <tr v-for="cancion in canciones" :key="cancion.id">
               <td>{{ cancion.nombre }}</td>
               <td>{{ cancion.autor }}</td>
               <td>{{ cancion.puntaje }}</td>

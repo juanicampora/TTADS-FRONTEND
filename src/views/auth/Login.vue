@@ -3,6 +3,10 @@ import GoogleImage from '@/assets/Google.png';
 import { ref } from 'vue'
 import Carga from '@/components/Carga.vue';
 import { useUsuario } from '@/stores/usuario'
+
+import { useAlerta } from '@/stores/alerta'
+const alerta = useAlerta()
+
 const usuario = useUsuario()
 const esperando = ref(false)
 // Firebase
@@ -18,6 +22,7 @@ const firebaseConfig = {
 const appfirebase = initializeApp(firebaseConfig);
 // Firebase GoogleAuth
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import axios from 'axios';
 const pasarC = () => {
   usuario.tipo = 'Cliente'
   usuario.uid = 'aaaa';
@@ -33,7 +38,7 @@ const pasarD = () => {
   usuario.uid = 'aaaa';
   usuario.name = 'Dj';
 }
-const loguear = () => {
+const loguear = async () => {
   esperando.value = true;
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
@@ -43,14 +48,38 @@ const loguear = () => {
       usuario.uid = result.user.uid;
       usuario.name = result.user.displayName;
       usuario.mail = result.user.email;
-      //Mandar con la API para loguear y obtener el tipo de usuario
-      usuario.tipo = 'Cliente' //cambiar por el tipo que devuelve la API
-      esperando.value = false;
+      axios({
+        method: 'post',
+        url: 'http://localhost:3000/api/usuarios/login',
+        data: {
+          "uid": usuario.uid,
+          "nombre": usuario.name,
+          "mail": usuario.mail
+        }
+      }).then((data) => {
+        usuario.tipo = data.data.data.tipo;
+        esperando.value = false;
+      }).catch((error) => {
+        console.log('Hubo un error con la API');
+        console.log(error);
+        if (error.response && error.response.data && error.response.data.message) {
+          alerta.mensaje = error.response.data.message;
+        } else if (error.message == 'Network Error') { alerta.mensaje = 'Error de conexión al Servidor' }
+        else { alerta.mensaje = error.message; }
+        alerta.tipo = 'danger'
+        alerta.activar()
+        usuario.uid = '';
+        usuario.name = '';
+        usuario.mail = '';
+        esperando.value = false;
+      });
     }).catch((error) => {
       // Handle Errors here.
       console.log('Hubo un error con firebase');
       const errorCode = error.code;
       const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+      alerta.activar(errorMessage, 'danger')
       esperando.value = false;
     });
 }
@@ -63,7 +92,8 @@ const loguear = () => {
     <div class="form">
       <div class="login-form">
         <button id="botonLogin" @click="loguear"><img :src="GoogleImage"
-            style="height: 50px; width: 50px; background-color: white ; margin-right: 10px;">Ingresar con Google</button>
+            style="height: 50px; width: 50px; background-color: white ; margin-right: 10px;">Ingresar con
+          Google</button>
       </div>
     </div>
   </div>

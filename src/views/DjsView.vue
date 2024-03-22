@@ -21,6 +21,7 @@ const claseEspera = ref('');
 
 const activarEditor = (djTabla) => {
   estadoEditor.value = false;
+  estadoEditorAcceso.value = false;
   estadoOpiniones.value = false;
   setTimeout(() => {
     djEditar.value = djTabla;
@@ -51,6 +52,7 @@ const verOpiniones = (djTabla) => {
 const nuevoDJ = () => {
   estadoOpiniones.value = false;
   estadoEditor.value = false;
+  estadoEditorAcceso.value = false;
   setTimeout(() => {
     djEditar.value = null;
     estadoEditor.value = true;
@@ -61,11 +63,11 @@ const hacerActual = (djTabla) => {
   axios({
     method: 'put',
     url: `https://fiestaappapi.onrender.com/api/djs/actual/${djTabla.id}`
+  }).then((response) => {
+    alerta.activar('Nuevo dj actualizado. Recuerde accionar "Nueva noche"', 'success')
   }).catch((error) => {
-    alerta.mensaje = error.message;
-    alerta.tipo = 'danger'
-    alerta.activar()
-  })
+    alerta.activar(error.message, 'danger')
+  });
   setTimeout(() => {
     getData();
   }, 1500);
@@ -78,9 +80,7 @@ const getData = async () => {
     claseEspera.value = 'disable-clicks disabled';
     const { data } = await axios.get('https://fiestaappapi.onrender.com/api/djs')
       .catch((error) => {
-        alerta.mensaje = error.message;
-        alerta.tipo = 'danger'
-        alerta.activar()
+        alerta.activar(error.message, 'danger')
         esperandoAPI.value = false;
         claseEspera.value = '';
       })

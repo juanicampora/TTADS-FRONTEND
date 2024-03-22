@@ -2,25 +2,31 @@
 import axios from 'axios'
 import { ref } from 'vue';
 
-const props = defineProps(['cancionEditar']);
+const props = defineProps(['idCancionDj', 'tipoEditar', 'cancionEditar']);
 const emit = defineEmits(['getData', 'cerrarEditor'])
 
 const nombreIngresado = ref('');
 const autorIngresado = ref('');
 const puntajeIngresado = ref('');
+const urlElegida = ref('');
 
 nombreIngresado.value = props.cancionEditar.nombre;
 autorIngresado.value = props.cancionEditar.autor;
 puntajeIngresado.value = props.cancionEditar.puntaje;
 
 const guardarIngresado = () => {
+  if (props.tipoEditar == 'cancion') {
+    urlElegida.value = `http://localhost:3000/api/canciones/${props.cancionEditar.id}`;
+  } else if (props.tipoEditar == 'canciondj') {
+    urlElegida.value = `http://localhost:3000/api/canciondj/${props.idCancionDj}`;
+  }
   axios({
     method: 'put',
-    url: `https://fiestaappapi.onrender.com/api/canciones/${props.cancionEditar.id}`,
+    url: urlElegida.value,
     data: {
       "nombre": nombreIngresado.value,
       "autor": autorIngresado.value,
-      //"puntaje": puntajeIngresado.value
+      "puntaje": puntajeIngresado.value
     }
   });
   nombreIngresado.value = '';

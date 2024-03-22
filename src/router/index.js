@@ -37,6 +37,12 @@ const router = createRouter({
       meta: { roles: ['Admin','Dj'] }
     },
     {
+      path: '/cancionesdj',
+      name: 'cancionesdj',
+      component: () => import('../views/CancionesDjView.vue'),
+      meta: { roles: ['Admin','Dj'] }
+    },
+    {
       path: '/topcanciones',
       name: 'topcanciones',
       component: () => import('../views/TopCancionesView.vue'),
@@ -63,6 +69,11 @@ const router = createRouter({
       path: '/denegado',
       name: 'Denegado',
       component: () => import('../views/DenegadoView.vue')
+    },
+    {
+      path: '/error',
+      name: 'Error',
+      component: () => import('../views/ErrorView.vue')
     }
   ]
 })
@@ -70,7 +81,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const usuario = useUsuario()
   if (to.meta.roles && !to.meta.roles.includes(usuario.tipo)) {
-      next('/denegado');
+      next('/');
   } else {
     next();
   }

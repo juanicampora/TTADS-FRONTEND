@@ -33,13 +33,9 @@ const eliminarIngresado = () => {
     method: 'delete',
     url: `https://fiestaappapi.onrender.com/api/djs/${props.djEditar.id}`,
   }).then(() => {
-    alerta.mensaje = 'DJ eliminado';
-    alerta.tipo = 'success'
-    alerta.activar()
+    alerta.activar('DJ eliminado', 'success')
   }).catch((error) => {
-    alerta.mensaje = error.message;
-    alerta.tipo = 'danger'
-    alerta.activar()
+    alerta.activar(error.message, 'danger')
   });
   instagramIngresado.value = '';
   nombreIngresado.value = '';
@@ -66,14 +62,13 @@ const guardarIngresado = () => {
     instagramIngresado.value = '';
     nombreIngresado.value = '';
     numeroIngresado.value = '';
+    alerta.activar('Datos del DJ guardados', 'success')
     setTimeout(() => {
       emit('getData');
       emit('cerrarEditor');
     }, 1000);
   } catch (error) {
-    alerta.mensaje = error.response.data.message;
-    alerta.tipo = 'danger'
-    alerta.activar()
+    alerta.activar(error.response.data.message, 'danger')
   }
 
 }
