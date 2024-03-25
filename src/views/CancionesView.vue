@@ -69,7 +69,7 @@ getData();
 <template>
   <div>
     <EditarCancion v-if="estadoEditor" idCancionDj='' tipoEditar='cancion' :cancionEditar="cancionEditar"
-      @cerrarEditor="estadoEditor = false" @getData="getData" />
+      tipoUsuario='Admin' @cerrarEditor="estadoEditor = false" @getData="getData" />
   </div>
   <div :class="claseEspera">
     <div class="container py-4 rounded mt-3" style="background-color: gray;">

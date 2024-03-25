@@ -90,7 +90,7 @@ const getData = async () => {
     try {
       espera.activar();
       claseEspera.value = 'disable-clicks';
-      const { data } = await axios.get(`https://fiestaappapi.onrender.com/api/canciondj/${usuario.uid}`);
+      const { data } = await axios.get(`http://localhost:3000/api/canciondj/${usuario.uid}`);
       if (data.data.length === 0) {
         alerta.activar('No hay canciones cargadas', 'warning')
       }
@@ -113,7 +113,7 @@ getData();
 <template>
   <div>
     <EditarCancion v-if="estadoEditor" :idCancionDj='idCancionDjEditar' tipoEditar='canciondj'
-      :cancionEditar="cancionEditar" @cerrarEditor="estadoEditor = false" @getData="getData" />
+      :cancionEditar="cancionEditar" tipoUsuario="Dj" @cerrarEditor="estadoEditor = false" @getData="getData" />
   </div>
   <div :class="claseEspera">
     <div class="container py-4 rounded mt-3" style="background-color: gray;">
