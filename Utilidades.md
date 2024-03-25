@@ -19,13 +19,11 @@ alerta.activar(error.message,'danger')
 
 ## Loader
 
-import Carga from '@/components/Carga.vue';
-const esperandoAPI = ref(false);
+import { useEspera } from '@/stores/espera'
+const espera = useEspera()
 
-esperandoAPI.value = true;
-esperandoAPI.value = false;
-
-<Carga v-if="esperandoAPI" />
+espera.activar();
+espera.desactivar();
 
 ## Datepicker
 

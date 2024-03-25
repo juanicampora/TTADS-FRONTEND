@@ -2,8 +2,8 @@
 import { ref } from 'vue';
 import axios from 'axios';
 
-import Carga from '@/components/Carga.vue';
-const esperandoAPI = ref(false);
+import { useEspera } from '@/stores/espera'
+const espera = useEspera()
 
 import { useAlerta } from '@/stores/alerta'
 const alerta = useAlerta()
@@ -16,7 +16,7 @@ const habilitado = ref(false);
 
 const verificarDjActual = async () => {
   try {
-    esperandoAPI.value = true;
+    espera.activar();
     const { data } = await axios.get(`https://fiestaappapi.onrender.com/api/usuarios/esdjactual/${usuario.uid}`)
     const esActual = data.esActual;
     const { data: data2 } = await axios.get(`https://fiestaappapi.onrender.com/api/djs/getFechaActual/${usuario.uid}`)
@@ -27,17 +27,17 @@ const verificarDjActual = async () => {
       new Date().getDate()).toISOString().split('T')[0]
     if (fechaActual === hoy && esActual) { habilitado.value = true; }
     else { habilitado.value = false; }
-    esperandoAPI.value = false;
+    espera.desactivar();
   } catch (error) {
     console.log(error);
-    esperandoAPI.value = false;
+    espera.desactivar();
   }
 }
 
 const limpiarIngresadas = () => cancionesIngresadas.value = "";
 
 const guardarCanciones = async () => {
-  esperandoAPI.value = true;
+  espera.activar();
   const canciones = cancionesIngresadas.value.split(';');
   for (const cancion of canciones) {
     const cancionSplit = cancion.split('-');
@@ -51,7 +51,7 @@ const guardarCanciones = async () => {
       alerta.activar(error.message, 'danger')
       setTimeout(() => {
         limpiarIngresadas();
-        esperandoAPI.value = false;
+        espera.desactivar();
       }, 1000);
       return;
     }
@@ -61,7 +61,7 @@ const guardarCanciones = async () => {
     limpiarIngresadas();
     setTimeout(() => {
       limpiarIngresadas();
-      esperandoAPI.value = false;
+      espera.desactivar();
     }, 1000);
   }, 3000);
 }
@@ -70,7 +70,6 @@ verificarDjActual();
 </script>
 
 <template>
-  <Carga v-if="esperandoAPI" />
   <div class="container py-4 rounded mt-3" style="background-color: gray;">
     <div>
       <h1 class="text-center display-5 fw-bold text-body-emphasis mb-3">Carga Canciones</h1>

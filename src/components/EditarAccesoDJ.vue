@@ -2,8 +2,8 @@
 import axios from 'axios'
 import { ref } from 'vue';
 
-import Carga from '@/components/Carga.vue';
-const esperandoAPI = ref(false);
+import { useEspera } from '@/stores/espera'
+const espera = useEspera()
 
 import { useAlerta } from '@/stores/alerta'
 const alerta = useAlerta()
@@ -15,7 +15,7 @@ const emailAcceso = ref('');
 
 
 const getMailDj = () => {
-  esperandoAPI.value = true;
+  espera.activar();
   try {
     axios({
       method: 'get',
@@ -24,11 +24,11 @@ const getMailDj = () => {
       if (response.data.data) {
         emailAcceso.value = response.data.data.mail;
       }
-      esperandoAPI.value = false;
+      espera.desactivar();
     });
   } catch (error) {
     alerta.activar(error.message, 'danger')
-    esperandoAPI.value = false;
+    espera.desactivar();
   }
 }
 
@@ -56,11 +56,10 @@ getMailDj();
 </script>
 
 <template>
-  <Carga v-if="esperandoAPI" />
   <div class="container py-4 rounded my-3" style="background-color: gray;">
     <div>
       <h6 class="text-center display-6 fw-bold text-body-emphasis">Gmail de acceso para {{
-    djEditar.nombre }}</h6>
+        djEditar.nombre }}</h6>
       <div class="col-lg-6 mx-auto">
         <input class="form-control mt-3" type="email" placeholder="Ingrese un Gmail" v-model="emailAcceso">
         <div class="mt-3 d-flex justify-content-evenly">

@@ -1,19 +1,20 @@
 <script setup>
 import axios from 'axios';
 import { ref } from 'vue';
-import Carga from '@/components/Carga.vue';
 import Error from '@/components/Error.vue';
+
+import { useEspera } from '@/stores/espera'
+const espera = useEspera()
 
 import { useAlerta } from '@/stores/alerta'
 const alerta = useAlerta()
 
-const esperandoAPI = ref(false);
 const errorObtenido = ref(false);
 const djActual = ref(null);
 const yaEsActual = ref(false);
 
 const getData = async () => {
-  esperandoAPI.value = true;
+  espera.activar();
   try {
     const { data } = await axios.get('https://fiestaappapi.onrender.com/api/djs/actual')
     djActual.value = data.data
@@ -25,10 +26,10 @@ const getData = async () => {
     if (djActual.value.fechaActual === hoy) {
       yaEsActual.value = true;
     }
-    esperandoAPI.value = false;
+    espera.desactivar();
   } catch (error) {
     errorObtenido.value = true;
-    esperandoAPI.value = false;
+    espera.desactivar();
     if (error.response.data.message) {
       alerta.mensaje = error.response.data.message;
     } else { alerta.mensaje = error.message; }
@@ -42,7 +43,7 @@ const nuevaNoche = async () => {
   try {
     const { data } = await axios.get('https://fiestaappapi.onrender.com/api/canciondj/nuevanoche')
     alerta.activar(data.message, 'success')
-    esperandoAPI.value = true;
+    espera.activar();
     setTimeout(() => {
       getData();
     }, 1500);
@@ -54,9 +55,8 @@ const nuevaNoche = async () => {
 </script>
 
 <template>
-  <Carga v-if="esperandoAPI" />
   <Error v-if="errorObtenido" />
-  <div class="container py-4 rounded mt-3" style="background-color: gray;" v-if="!esperandoAPI && !errorObtenido">
+  <div class="container py-4 rounded mt-3" style="background-color: gray;" v-if="!espera.estado && !errorObtenido">
     <div>
       <h1 class="text-center display-5 fw-bold text-body-emphasis mb-3">Nueva Noche</h1>
       <div class="mx-4 text-center">

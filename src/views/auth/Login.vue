@@ -1,14 +1,15 @@
 <script setup>
 import GoogleImage from '@/assets/Google.png';
 import { ref } from 'vue'
-import Carga from '@/components/Carga.vue';
 import { useUsuario } from '@/stores/usuario'
+
+import { useEspera } from '@/stores/espera'
+const espera = useEspera()
 
 import { useAlerta } from '@/stores/alerta'
 const alerta = useAlerta()
 
 const usuario = useUsuario()
-const esperando = ref(false)
 // Firebase
 import { initializeApp } from "firebase/app";
 const firebaseConfig = {
@@ -27,19 +28,22 @@ const pasarC = () => {
   usuario.tipo = 'Cliente'
   usuario.uid = 'aaaa';
   usuario.name = 'Cliente';
+  usuario.logueado = true;
 }
 const pasarA = () => {
   usuario.tipo = 'Admin'
   usuario.uid = 'aaaa';
   usuario.name = 'Admin';
+  usuario.logueado = true;
 }
 const pasarD = () => {
   usuario.tipo = 'Dj'
   usuario.uid = 'aaaa';
   usuario.name = 'Dj';
+  usuario.logueado = true;
 }
 const loguear = async () => {
-  esperando.value = true;
+  espera.activar();
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
   auth.languageCode = 'es';
@@ -59,7 +63,7 @@ const loguear = async () => {
       }).then((data) => {
         usuario.tipo = data.data.data.tipo;
         usuario.logueado = true;
-        esperando.value = false;
+        espera.desactivar();
       }).catch((error) => {
         console.log('Hubo un error con la API');
         console.log(error);
@@ -72,7 +76,7 @@ const loguear = async () => {
         usuario.uid = '';
         usuario.name = '';
         usuario.mail = '';
-        esperando.value = false;
+        espera.desactivar();
       });
     }).catch((error) => {
       // Handle Errors here.
@@ -81,14 +85,13 @@ const loguear = async () => {
       const errorMessage = error.message;
       console.log(errorCode, errorMessage);
       alerta.activar(errorMessage, 'danger')
-      esperando.value = false;
+      espera.desactivar();
     });
 }
 
 </script>
 
 <template>
-  <Carga v-if="esperando" />
   <div class="login-page">
     <div class="form">
       <div class="login-form">

@@ -1,16 +1,17 @@
 <script setup>
 import { ref } from 'vue';
 import axios from 'axios';
-import Carga from '@/components/Carga.vue';
 import { useUsuario } from '@/stores/usuario'
 const usuario = useUsuario()
+
+import { useEspera } from '@/stores/espera'
+const espera = useEspera()
 
 const canciones = ref([]);
 
 const idSeleccionados = ref([]);
 const seleccionCanciones = ref({});
 const cantidadSeleccionados = ref(0);
-const esperandoAPI = ref(false);
 const claseEspera = ref('');
 
 const limpiarSeleccion = () => {
@@ -51,14 +52,14 @@ const votarCanciones = () => {
 
 const getCancionesDj = async () => {
   try {
-    esperandoAPI.value = true;
+    espera.activar();
     claseEspera.value = 'disable-clicks';
     const { data } = await axios.get('https://fiestaappapi.onrender.com/api/canciondj/votacion');
     canciones.value = data.data;
     data.data.forEach(cancion => {
       seleccionCanciones.value[cancion.id] = false;
     });
-    esperandoAPI.value = false;
+    espera.desactivar();
     claseEspera.value = '';
   } catch (error) {
     console.log(error)
@@ -70,7 +71,6 @@ getCancionesDj();
 </script>
 
 <template>
-  <Carga v-if="esperandoAPI" />
   <div :class="claseEspera">
     <div class="container py-4 rounded mt-3" style="background-color: gray;">
       <h1 class="text-center display-5 fw-bold text-body-emphasis mb-3">Votar Canciones</h1>

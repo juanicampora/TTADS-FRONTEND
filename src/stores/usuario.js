@@ -36,5 +36,5 @@ export const useUsuario = defineStore('usuario', () => {
       esperaUsuario.value = false
     })
 }
-  return { tipo, uid, name, mail, cerrarsesion}
+  return { tipo, uid, name, mail, logueado, esperaUsuario, cerrarsesion}
 })
