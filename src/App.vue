@@ -15,7 +15,7 @@ import Carga from '@/components/Carga.vue';
 
 <template>
   <Carga v-if="usuario.esperaUsuario" />
-  <div v-if="usuario.uid != ''">
+  <div v-if="usuario.logueado">
     <header class="d-flex justify-content-center py-3"
       style="position:relative; z-index:10000; background-color: #282828;">
       <Navbar />

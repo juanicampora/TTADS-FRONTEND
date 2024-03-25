@@ -11,6 +11,7 @@ export const useUsuario = defineStore('usuario', () => {
   const uid = ref('')
   const name = ref('')
   const mail = ref('')
+  const logueado = ref(false)
   const esperaUsuario = ref(false)
   const cerrarsesion = () => {
     esperaUsuario.value = true
@@ -26,6 +27,7 @@ export const useUsuario = defineStore('usuario', () => {
       uid.value = ''
       name.value = ''
       mail.value = ''
+      logueado.value = false
       esperaUsuario.value = false
     }).catch((error) => {
       console.log('Error al cerrar sesión:', error.response.data.message);

@@ -58,6 +58,7 @@ const loguear = async () => {
         }
       }).then((data) => {
         usuario.tipo = data.data.data.tipo;
+        usuario.logueado = true;
         esperando.value = false;
       }).catch((error) => {
         console.log('Hubo un error con la API');
