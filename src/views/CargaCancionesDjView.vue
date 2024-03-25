@@ -1,7 +1,9 @@
 <script setup>
 import { ref } from 'vue';
 import axios from 'axios';
+
 import Carga from '@/components/Carga.vue';
+const esperandoAPI = ref(false);
 
 import { useAlerta } from '@/stores/alerta'
 const alerta = useAlerta()
@@ -10,7 +12,6 @@ import { useUsuario } from '@/stores/usuario'
 const usuario = useUsuario()
 
 const cancionesIngresadas = ref("");
-const esperandoAPI = ref(false);
 const habilitado = ref(false);
 
 const verificarDjActual = async () => {
