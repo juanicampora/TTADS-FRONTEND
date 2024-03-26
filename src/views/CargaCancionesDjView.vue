@@ -40,20 +40,22 @@ const guardarCanciones = async () => {
   espera.activar();
   const canciones = cancionesIngresadas.value.split(';');
   for (const cancion of canciones) {
-    const cancionSplit = cancion.split('-');
-    try {
-      await axios.post('https://fiestaappapi.onrender.com/api/canciondj', {
-        "nombre": cancionSplit[1],
-        "autor": cancionSplit[0]
-      });
-    } catch (error) {
-      console.log(error);
-      alerta.activar(error.message, 'danger')
-      setTimeout(() => {
-        limpiarIngresadas();
-        espera.desactivar();
-      }, 1000);
-      return;
+    if (cancion.includes('-')) {
+      const cancionSplit = cancion.split('-');
+      try {
+        await axios.post('https://fiestaappapi.onrender.com/api/canciondj', {
+          "nombre": cancionSplit[1],
+          "autor": cancionSplit[0]
+        });
+      } catch (error) {
+        console.log(error);
+        alerta.activar(error.message, 'danger')
+        setTimeout(() => {
+          limpiarIngresadas();
+          espera.desactivar();
+        }, 1000);
+        return;
+      }
     }
   }
   setTimeout(() => {
