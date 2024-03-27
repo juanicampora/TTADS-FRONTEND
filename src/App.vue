@@ -3,6 +3,11 @@ import { RouterView } from 'vue-router'
 import Navbar from '@/components/Navbar.vue'
 import Login from './views/auth/Login.vue'
 
+import Carga from '@/components/Carga.vue';
+
+import { useEspera } from '@/stores/espera'
+const espera = useEspera()
+
 import { useUsuario } from '@/stores/usuario'
 const usuario = useUsuario()
 
@@ -10,12 +15,11 @@ import Toast from '@/components/Toast.vue'
 import { useAlerta } from '@/stores/alerta'
 const alerta = useAlerta()
 
-import Carga from '@/components/Carga.vue';
 </script>
 
 <template>
-  <Carga v-if="usuario.esperaUsuario" />
-  <div v-if="usuario.uid != ''">
+  <Carga v-if="espera.estado" />
+  <div v-if="usuario.logueado">
     <header class="d-flex justify-content-center py-3"
       style="position:relative; z-index:10000; background-color: #282828;">
       <Navbar />

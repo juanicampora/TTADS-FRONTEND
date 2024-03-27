@@ -4,7 +4,9 @@ import EditarDJ from '@/components/EditarDJ.vue';
 import EditarAccesoDJ from '@/components/EditarAccesoDJ.vue';
 import OpinionesDJ from '@/components/OpinionesDJ.vue';
 import axios from 'axios';
-import Carga from '@/components/Carga.vue';
+
+import { useEspera } from '@/stores/espera'
+const espera = useEspera()
 
 import { useAlerta } from '@/stores/alerta'
 const alerta = useAlerta()
@@ -15,7 +17,6 @@ const estadoEditorAcceso = ref(false);
 const djEditar = ref(0);
 const estadoOpiniones = ref(false);
 const djOpiniones = ref(0);
-const esperandoAPI = ref(false);
 const claseEspera = ref('');
 
 
@@ -76,15 +77,15 @@ const hacerActual = (djTabla) => {
 
 const getData = async () => {
   try {
-    esperandoAPI.value = true;
+    espera.activar();
     claseEspera.value = 'disable-clicks disabled';
     const { data } = await axios.get('https://fiestaappapi.onrender.com/api/djs')
       .catch((error) => {
         alerta.activar(error.message, 'danger')
-        esperandoAPI.value = false;
+        espera.desactivar();
         claseEspera.value = '';
       })
-    esperandoAPI.value = false;
+    espera.desactivar();
     claseEspera.value = '';
     djs.value = data.data;
   } catch (error) {
@@ -96,10 +97,7 @@ getData();
 </script>
 
 <template>
-  <Carga v-if="esperandoAPI" />
   <div :class="claseEspera">
-    <!-- <loading v-model:active="esperandoAPI" color="#42b883" :is-full-page="fullPage" /> -->
-
     <div>
       <EditarDJ v-if="estadoEditor" :djEditar="djEditar" @cerrarEditor="estadoEditor = false" @getData="getData" />
       <EditarAccesoDJ v-if="estadoEditorAcceso" :djEditar="djEditar" @cerrarEditor="estadoEditorAcceso = false"

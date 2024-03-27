@@ -2,7 +2,7 @@
 import axios from 'axios'
 import { ref } from 'vue';
 
-const props = defineProps(['idCancionDj', 'tipoEditar', 'cancionEditar']);
+const props = defineProps(['idCancionDj', 'tipoEditar', 'cancionEditar', 'tipoUsuario']);
 const emit = defineEmits(['getData', 'cerrarEditor'])
 
 const nombreIngresado = ref('');
@@ -47,7 +47,7 @@ const guardarIngresado = () => {
         <form>
           <input class="form-control mt-3" type="text" placeholder="Nombre cancion" v-model="nombreIngresado">
           <input class="form-control mt-3" type="text" placeholder="Autor cancion" v-model="autorIngresado">
-          <div class="row">
+          <div class="row" v-if="tipoUsuario == 'Dj'">
             <div class="col">
               <input class="form-control mt-3" type="number" placeholder="Puntaje" disabled v-model="puntajeIngresado">
             </div>

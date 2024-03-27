@@ -2,21 +2,24 @@
 import { ref } from 'vue';
 import axios from 'axios';
 
-import Carga from '@/components/Carga.vue';
-const esperandoAPI = ref(false);
+import { useEspera } from '@/stores/espera'
+const espera = useEspera()
 
 import { useAlerta } from '@/stores/alerta'
 const alerta = useAlerta()
+
+import { useUsuario } from '@/stores/usuario'
+const usuario = useUsuario()
 
 const OpinionDj = ref("");
 
 const limpiarOpinion = () => OpinionDj.value = "";
 
 const enviarOpinion = async () => {
-  esperandoAPI.value = true;
+  espera.activar();
   if (OpinionDj.value != "") {
     try {
-      await axios.post('https://fiestaappapi.onrender.com/api/djs/opinion', { "opinion": OpinionDj.value });
+      await axios.post('https://fiestaappapi.onrender.com/api/djs/opinion', { "opinion": OpinionDj.value, "uid": usuario.uid });
       alerta.activar('Opinión enviada correctamente', 'success')
       limpiarOpinion();
     } catch (error) {
@@ -24,12 +27,11 @@ const enviarOpinion = async () => {
       alerta.activar(error.message, 'danger')
     }
   }
-  esperandoAPI.value = false;
+  espera.desactivar();
 }
 </script>
 
 <template>
-  <Carga v-if="esperandoAPI" />
   <div class="container py-4 rounded mt-3" style="background-color: gray;">
     <div>
       <h1 class="text-center display-5 fw-bold text-body-emphasis mb-3">Opinar del actual DJ</h1>

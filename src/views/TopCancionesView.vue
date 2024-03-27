@@ -3,22 +3,23 @@ import { ref } from 'vue';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
 import axios from 'axios';
-import Carga from '@/components/Carga.vue';
+
+import { useEspera } from '@/stores/espera'
+const espera = useEspera()
 
 const fechasPermitidas = ref([]);
 const fechaElegida = ref();
 const canciones = ref([]);
 const tablaLista = ref(false);
-const esperandoAPI = ref(false);
 const claseEspera = ref('');
 
 const getFechasPermitidas = async () => {
   try {
-    esperandoAPI.value = true;
+    espera.activar();
     claseEspera.value = 'disable-clicks';
     const { data } = await axios.get('https://fiestaappapi.onrender.com/api/canciondj/fechas');
     fechasPermitidas.value = formatearFechas(data.data);
-    esperandoAPI.value = false;
+    espera.desactivar();
     claseEspera.value = '';
   } catch (error) {
     console.log(error)
@@ -60,7 +61,6 @@ const format = (fechaElegida) => {
 </script>
 
 <template>
-  <Carga v-if="esperandoAPI" />
   <div :class="claseEspera">
     <div class="container py-4 rounded mt-3" style="background-color: gray;">
       <h1 class="text-center display-5 fw-bold text-body-emphasis mb-3">Top Canciones</h1>

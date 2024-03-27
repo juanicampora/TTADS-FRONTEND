@@ -2,7 +2,9 @@
 import { ref } from 'vue';
 import EditarCancion from '@/components/EditarCancion.vue';
 import axios from 'axios';
-import Carga from '@/components/Carga.vue';
+
+import { useEspera } from '@/stores/espera'
+const espera = useEspera()
 
 const canciones = ref([]);
 const estadoEditor = ref(false);
@@ -10,7 +12,6 @@ const cancionEditar = ref(0);
 const tipoEditar = 'cancion';
 const nombreIngresado = ref('');
 const autorIngresado = ref('');
-const esperandoAPI = ref(false);
 const claseEspera = ref('');
 
 const activarEditor = (cancionTabla) => {
@@ -50,11 +51,11 @@ const eliminarCancion = (idCancion) => {
 
 const getData = async () => {
   try {
-    esperandoAPI.value = true;
+    espera.activar();
     claseEspera.value = 'disable-clicks';
     const { data } = await axios.get('https://fiestaappapi.onrender.com/api/canciones');
     canciones.value = data.data;
-    esperandoAPI.value = false;
+    espera.desactivar();
     claseEspera.value = '';
   } catch (error) {
     console.log(error)
@@ -66,10 +67,9 @@ getData();
 </script>
 
 <template>
-  <Carga v-if="esperandoAPI" />
   <div>
     <EditarCancion v-if="estadoEditor" idCancionDj='' tipoEditar='cancion' :cancionEditar="cancionEditar"
-      @cerrarEditor="estadoEditor = false" @getData="getData" />
+      tipoUsuario='Admin' @cerrarEditor="estadoEditor = false" @getData="getData" />
   </div>
   <div :class="claseEspera">
     <div class="container py-4 rounded mt-3" style="background-color: gray;">

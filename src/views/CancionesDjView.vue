@@ -2,7 +2,9 @@
 import { ref } from 'vue';
 import EditarCancion from '@/components/EditarCancion.vue';
 import axios from 'axios';
-import Carga from '@/components/Carga.vue';
+
+import { useEspera } from '@/stores/espera'
+const espera = useEspera()
 
 import { useUsuario } from '@/stores/usuario'
 const usuario = useUsuario()
@@ -16,7 +18,6 @@ const cancionEditar = ref(0);
 const idCancionDjEditar = ref('');
 const nombreIngresado = ref('');
 const autorIngresado = ref('');
-const esperandoAPI = ref(false);
 const claseEspera = ref('');
 const habilitado = ref(false);
 
@@ -38,12 +39,18 @@ const guardarCancion = () => {
       "nombre": nombreIngresado.value,
       "autor": autorIngresado.value
     }
+  }).then((response) => {
+    if (response.status === 201) {
+      alerta.activar(response.data.message, 'success')
+    } else {
+      alerta.activar(response.data.message, 'warning')
+    }
+    nombreIngresado.value = '';
+    autorIngresado.value = '';
+    setTimeout(() => {
+      getData();
+    }, 1000);
   });
-  nombreIngresado.value = '';
-  autorIngresado.value = '';
-  setTimeout(() => {
-    getData();
-  }, 1000);
 };
 
 const eliminarCancion = (idCancion) => {
@@ -69,7 +76,7 @@ const eliminarCancion = (idCancion) => {
 
 const getData = async () => {
   try {
-    esperandoAPI.value = true;
+    espera.activar();
     const { data } = await axios.get(`https://fiestaappapi.onrender.com/api/usuarios/esdjactual/${usuario.uid}`)
     const esActual = data.esActual;
     const { data: data2 } = await axios.get(`https://fiestaappapi.onrender.com/api/djs/getFechaActual/${usuario.uid}`)
@@ -80,25 +87,25 @@ const getData = async () => {
       new Date().getDate()).toISOString().split('T')[0]
     if (fechaActual === hoy && esActual) { habilitado.value = true; }
     else { habilitado.value = false; }
-    esperandoAPI.value = false;
+    espera.desactivar();
   } catch (error) {
     console.log(error);
-    esperandoAPI.value = false;
+    espera.desactivar();
   }
   if (habilitado.value) {
     try {
-      esperandoAPI.value = true;
+      espera.activar();
       claseEspera.value = 'disable-clicks';
       const { data } = await axios.get(`https://fiestaappapi.onrender.com/api/canciondj/${usuario.uid}`);
       if (data.data.length === 0) {
         alerta.activar('No hay canciones cargadas', 'warning')
       }
       canciones.value = data.data;
-      esperandoAPI.value = false;
+      espera.desactivar();
       claseEspera.value = '';
     } catch (error) {
       console.log(error)
-      esperandoAPI.value = false;
+      espera.desactivar();
       claseEspera.value = '';
       alerta.activar('Error al obtener las canciones', 'danger')
     }
@@ -110,10 +117,9 @@ getData();
 </script>
 
 <template>
-  <Carga v-if="esperandoAPI" />
   <div>
     <EditarCancion v-if="estadoEditor" :idCancionDj='idCancionDjEditar' tipoEditar='canciondj'
-      :cancionEditar="cancionEditar" @cerrarEditor="estadoEditor = false" @getData="getData" />
+      :cancionEditar="cancionEditar" tipoUsuario="Dj" @cerrarEditor="estadoEditor = false" @getData="getData" />
   </div>
   <div :class="claseEspera">
     <div class="container py-4 rounded mt-3" style="background-color: gray;">

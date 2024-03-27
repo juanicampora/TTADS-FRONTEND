@@ -1,14 +1,15 @@
 <script setup>
 import GoogleImage from '@/assets/Google.png';
 import { ref } from 'vue'
-import Carga from '@/components/Carga.vue';
 import { useUsuario } from '@/stores/usuario'
+
+import { useEspera } from '@/stores/espera'
+const espera = useEspera()
 
 import { useAlerta } from '@/stores/alerta'
 const alerta = useAlerta()
 
 const usuario = useUsuario()
-const esperando = ref(false)
 // Firebase
 import { initializeApp } from "firebase/app";
 const firebaseConfig = {
@@ -23,23 +24,14 @@ const appfirebase = initializeApp(firebaseConfig);
 // Firebase GoogleAuth
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import axios from 'axios';
-const pasarC = () => {
-  usuario.tipo = 'Cliente'
-  usuario.uid = 'aaaa';
-  usuario.name = 'Cliente';
-}
 const pasarA = () => {
   usuario.tipo = 'Admin'
-  usuario.uid = 'aaaa';
+  usuario.uid = 'bbbb';
   usuario.name = 'Admin';
-}
-const pasarD = () => {
-  usuario.tipo = 'Dj'
-  usuario.uid = 'aaaa';
-  usuario.name = 'Dj';
+  usuario.logueado = true;
 }
 const loguear = async () => {
-  esperando.value = true;
+  espera.activar();
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
   auth.languageCode = 'es';
@@ -58,7 +50,8 @@ const loguear = async () => {
         }
       }).then((data) => {
         usuario.tipo = data.data.data.tipo;
-        esperando.value = false;
+        usuario.logueado = true;
+        espera.desactivar();
       }).catch((error) => {
         console.log('Hubo un error con la API');
         console.log(error);
@@ -71,7 +64,7 @@ const loguear = async () => {
         usuario.uid = '';
         usuario.name = '';
         usuario.mail = '';
-        esperando.value = false;
+        espera.desactivar();
       });
     }).catch((error) => {
       // Handle Errors here.
@@ -80,14 +73,13 @@ const loguear = async () => {
       const errorMessage = error.message;
       console.log(errorCode, errorMessage);
       alerta.activar(errorMessage, 'danger')
-      esperando.value = false;
+      espera.desactivar();
     });
 }
 
 </script>
 
 <template>
-  <Carga v-if="esperando" />
   <div class="login-page">
     <div class="form">
       <div class="login-form">
@@ -99,8 +91,6 @@ const loguear = async () => {
   </div>
   <div d-flex style="text-align: center;">
     <button class="btn btn-danger" @click="pasarA">Entrar Directo Admin (hardcodeado)</button> <br><br>
-    <button class="btn btn-danger" @click="pasarD">Entrar Directo Dj (hardcodeado)</button> <br><br>
-    <button class="btn btn-danger" @click="pasarC">Entrar Directo Cliente (hardcodeado)</button>
   </div>
 </template>
 
