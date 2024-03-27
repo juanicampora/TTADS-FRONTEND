@@ -24,22 +24,10 @@ const appfirebase = initializeApp(firebaseConfig);
 // Firebase GoogleAuth
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import axios from 'axios';
-const pasarC = () => {
-  usuario.tipo = 'Cliente'
-  usuario.uid = 'aaaa';
-  usuario.name = 'Cliente';
-  usuario.logueado = true;
-}
 const pasarA = () => {
   usuario.tipo = 'Admin'
   usuario.uid = 'bbbb';
   usuario.name = 'Admin';
-  usuario.logueado = true;
-}
-const pasarD = () => {
-  usuario.tipo = 'Dj'
-  usuario.uid = 'cccc';
-  usuario.name = 'Dj';
   usuario.logueado = true;
 }
 const loguear = async () => {
@@ -103,8 +91,6 @@ const loguear = async () => {
   </div>
   <div d-flex style="text-align: center;">
     <button class="btn btn-danger" @click="pasarA">Entrar Directo Admin (hardcodeado)</button> <br><br>
-    <button class="btn btn-danger" @click="pasarD">Entrar Directo Dj (hardcodeado)</button> <br><br>
-    <button class="btn btn-danger" @click="pasarC">Entrar Directo Cliente (hardcodeado)</button>
   </div>
 </template>
 
