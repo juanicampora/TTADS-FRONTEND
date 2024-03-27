@@ -34,17 +34,23 @@ const activarEditor = (id, cancionTabla) => {
 const guardarCancion = () => {
   axios({
     method: 'post',
-    url: 'https://fiestaappapi.onrender.com/api/canciondj',
+    url: 'http://localhost:3000/api/canciondj',
     data: {
       "nombre": nombreIngresado.value,
       "autor": autorIngresado.value
     }
+  }).then((response) => {
+    if (response.status === 201) {
+      alerta.activar(response.data.message, 'success')
+    } else {
+      alerta.activar(response.data.message, 'warning')
+    }
+    nombreIngresado.value = '';
+    autorIngresado.value = '';
+    setTimeout(() => {
+      getData();
+    }, 1000);
   });
-  nombreIngresado.value = '';
-  autorIngresado.value = '';
-  setTimeout(() => {
-    getData();
-  }, 1000);
 };
 
 const eliminarCancion = (idCancion) => {
