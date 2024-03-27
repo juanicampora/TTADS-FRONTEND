@@ -32,13 +32,13 @@ const pasarC = () => {
 }
 const pasarA = () => {
   usuario.tipo = 'Admin'
-  usuario.uid = 'aaaa';
+  usuario.uid = 'bbbb';
   usuario.name = 'Admin';
   usuario.logueado = true;
 }
 const pasarD = () => {
   usuario.tipo = 'Dj'
-  usuario.uid = 'aaaa';
+  usuario.uid = 'cccc';
   usuario.name = 'Dj';
   usuario.logueado = true;
 }

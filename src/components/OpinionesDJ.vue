@@ -16,8 +16,9 @@ const opiniones = ref([]);
 const getOpiniones = async () => {
   try {
     espera.activar();
-    const { data } = await axios.get(`https://fiestaappapi.onrender.com/api/djs/${props.djOpiniones.id}/opiniones`);
+    const { data } = await axios.get(`http://localhost:3000/api/djs/${props.djOpiniones.id}/opiniones`);
     opiniones.value = data.data;
+    console.log(data.data);
     espera.desactivar();
   } catch (error) {
     alerta.activar(error.message, 'danger')
@@ -49,10 +50,22 @@ getOpiniones();
         <button type="button" class="btn btn-secondary my-2" @click="$emit('cerrarOpiniones')">Cerrar</button>
         <h2 v-if="opiniones.length === 0">No hay opiniones de {{ djOpiniones.nombre }}</h2>
         <table v-else class="table">
+          <thead>
+            <tr class="table-secondary">
+              <th></th>
+              <th>Usuario</th>
+              <th>Opinión</th>
+            </tr>
+          </thead>
           <tbody>
             <tr v-for="opinion in opiniones" :key="opinion.id">
-              <td><button class="btn btn-danger btn-sm" style="margin-right: 10px;"
-                  @click="eliminarOpinion(opinion.id)"><i class="bi bi-trash3"></i></button> {{ opinion.opinion }}</td>
+              <td>
+                <button class="btn btn-danger btn-sm" style="margin-right: 10px;" @click="eliminarOpinion(opinion.id)">
+                  <i class="bi bi-trash3"></i>
+                </button>
+              </td>
+              <td>{{ opinion.usuario.nombre }}</td>
+              <td>{{ opinion.opinion }}</td>
             </tr>
           </tbody>
         </table>

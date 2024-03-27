@@ -8,6 +8,9 @@ const espera = useEspera()
 import { useAlerta } from '@/stores/alerta'
 const alerta = useAlerta()
 
+import { useUsuario } from '@/stores/usuario'
+const usuario = useUsuario()
+
 const OpinionDj = ref("");
 
 const limpiarOpinion = () => OpinionDj.value = "";
@@ -16,7 +19,7 @@ const enviarOpinion = async () => {
   espera.activar();
   if (OpinionDj.value != "") {
     try {
-      await axios.post('https://fiestaappapi.onrender.com/api/djs/opinion', { "opinion": OpinionDj.value });
+      await axios.post('http://localhost:3000/api/djs/opinion', { "opinion": OpinionDj.value, "uid": usuario.uid });
       alerta.activar('Opinión enviada correctamente', 'success')
       limpiarOpinion();
     } catch (error) {
