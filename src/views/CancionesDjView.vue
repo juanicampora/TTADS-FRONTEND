@@ -34,7 +34,7 @@ const activarEditor = (id, cancionTabla) => {
 const guardarCancion = () => {
   axios({
     method: 'post',
-    url: 'http://localhost:3000/api/canciondj',
+    url: 'https://fiestaappapi.onrender.com/api/canciondj',
     data: {
       "nombre": nombreIngresado.value,
       "autor": autorIngresado.value
@@ -96,7 +96,7 @@ const getData = async () => {
     try {
       espera.activar();
       claseEspera.value = 'disable-clicks';
-      const { data } = await axios.get(`http://localhost:3000/api/canciondj/${usuario.uid}`);
+      const { data } = await axios.get(`https://fiestaappapi.onrender.com/api/canciondj/${usuario.uid}`);
       if (data.data.length === 0) {
         alerta.activar('No hay canciones cargadas', 'warning')
       }

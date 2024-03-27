@@ -44,7 +44,7 @@ const guardarCanciones = async () => {
       const cancionSplit = cancion.split('-');
       axios({
         method: 'post',
-        url: 'http://localhost:3000/api/canciondj',
+        url: 'https://fiestaappapi.onrender.com/api/canciondj',
         data: {
           "nombre": cancionSplit[1],
           "autor": cancionSplit[0]

@@ -16,7 +16,7 @@ const opiniones = ref([]);
 const getOpiniones = async () => {
   try {
     espera.activar();
-    const { data } = await axios.get(`http://localhost:3000/api/djs/${props.djOpiniones.id}/opiniones`);
+    const { data } = await axios.get(`https://fiestaappapi.onrender.com/api/djs/${props.djOpiniones.id}/opiniones`);
     opiniones.value = data.data;
     console.log(data.data);
     espera.desactivar();

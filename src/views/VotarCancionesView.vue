@@ -56,7 +56,7 @@ const getCancionesDj = async () => {
   try {
     espera.activar();
     claseEspera.value = 'disable-clicks';
-    const habilitacion = await axios.get(`http://localhost:3000/api/usuarios/voto/${usuario.uid}`);
+    const habilitacion = await axios.get(`https://fiestaappapi.onrender.com/api/usuarios/voto/${usuario.uid}`);
     console.log(habilitacion);
     if (habilitacion.data.habilitado === false) {
       espera.desactivar();

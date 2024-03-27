@@ -19,7 +19,7 @@ const enviarOpinion = async () => {
   espera.activar();
   if (OpinionDj.value != "") {
     try {
-      await axios.post('http://localhost:3000/api/djs/opinion', { "opinion": OpinionDj.value, "uid": usuario.uid });
+      await axios.post('https://fiestaappapi.onrender.com/api/djs/opinion', { "opinion": OpinionDj.value, "uid": usuario.uid });
       alerta.activar('Opinión enviada correctamente', 'success')
       limpiarOpinion();
     } catch (error) {
