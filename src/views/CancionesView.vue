@@ -53,7 +53,7 @@ const getData = async () => {
   try {
     espera.activar();
     claseEspera.value = 'disable-clicks';
-    const { data } = await axios.get('https://fiestaappapi.onrender.com/api/canciones');
+    const { data } = await axios.get('http://localhost:3000/api/canciones');
     canciones.value = data.data;
     espera.desactivar();
     claseEspera.value = '';
@@ -95,7 +95,7 @@ getData();
             <tr v-for="cancion in canciones" :key="cancion.id">
               <td>{{ cancion.nombre }}</td>
               <td>{{ cancion.autor }}</td>
-              <td>{{ cancion.puntaje }}</td>
+              <td>{{ cancion.puntajeTotal }}</td>
               <td class="d-flex justify-content-end">
                 <div class="btn-group">
                   <button class="btn btn-warning" @click="activarEditor(cancion)"><i

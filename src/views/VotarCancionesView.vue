@@ -104,7 +104,7 @@ getCancionesDj();
         <h1 class="text-center display-5 fw-bold text-body-emphasis mb-3">Votar Canciones</h1>
         <div class="mx-4">
           <div v-if="inhabilitado">
-            <h5 class="text-center" style="color: rgb(120 0 0);">Ya votó esta noche</h5>
+            <h5 class="text-center text-danger-emphasis">Ya votó esta noche</h5>
           </div>
           <div v-else>
             <h5 class="text-center" :class="{ 'bg-white text-danger': idSeleccionados.length > 10 }">Seleccione hasta
