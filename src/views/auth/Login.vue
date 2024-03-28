@@ -42,13 +42,14 @@ const loguear = async () => {
       usuario.mail = result.user.email;
       axios({
         method: 'post',
-        url: 'https://fiestaappapi.onrender.com/api/usuarios/login',
+        url: 'http://localhost:3000/api/usuarios/login',
         data: {
           "uid": usuario.uid,
           "nombre": usuario.name,
           "mail": usuario.mail
         }
       }).then((data) => {
+        console.log(data)
         usuario.tipo = data.data.data.tipo;
         usuario.logueado = true;
         espera.desactivar();
