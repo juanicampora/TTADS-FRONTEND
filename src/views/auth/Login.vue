@@ -42,14 +42,13 @@ const loguear = async () => {
       usuario.mail = result.user.email;
       axios({
         method: 'post',
-        url: 'http://localhost:3000/api/usuarios/login',
+        url: 'https://fiestaappapi.onrender.com/api/usuarios/login',
         data: {
           "uid": usuario.uid,
           "nombre": usuario.name,
           "mail": usuario.mail
         }
       }).then((data) => {
-        console.log(data)
         usuario.tipo = data.data.data.tipo;
         usuario.logueado = true;
         espera.desactivar();
@@ -82,7 +81,9 @@ const loguear = async () => {
 
 <template>
   <div class="login-page">
+    <div class="background-container"></div>
     <div class="form">
+      <div class="logo"><img src="/FiestApp.png"></div>
       <div class="login-form">
         <button id="botonLogin" @click="loguear"><img :src="GoogleImage"
             style="height: 50px; width: 50px; background-color: white ; margin-right: 10px;">Ingresar con
@@ -90,27 +91,44 @@ const loguear = async () => {
       </div>
     </div>
   </div>
-  <div d-flex style="text-align: center;">
-    <button class="btn btn-danger" @click="pasarA">Entrar Directo Admin (hardcodeado)</button> <br><br>
-  </div>
 </template>
 
 <style scoped>
+.logo {
+  margin-bottom: 20px;
+}
+
+.background-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('imagenfiesta.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: blur(5px);
+}
+
 .login-page {
   width: 360px;
-  padding: 8% 0 0;
+  height: 100vh;
   margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .form {
   position: relative;
   z-index: 1;
-  background: #FFFFFF;
+  background: #ffffffc2;
   max-width: 360px;
   margin: 0 auto 100px;
   padding: 45px;
   text-align: center;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  border-radius: 10px;
 }
 
 .form input {
@@ -137,6 +155,7 @@ const loguear = async () => {
   -webkit-transition: all 0.3 ease;
   transition: all 0.3 ease;
   cursor: pointer;
+  border-radius: 6px;
 }
 
 .form button:hover,

@@ -18,7 +18,6 @@ const getOpiniones = async () => {
     espera.activar();
     const { data } = await axios.get(`https://fiestaappapi.onrender.com/api/djs/${props.djOpiniones.id}/opiniones`);
     opiniones.value = data.data;
-    console.log(data.data);
     espera.desactivar();
   } catch (error) {
     alerta.activar(error.message, 'danger')

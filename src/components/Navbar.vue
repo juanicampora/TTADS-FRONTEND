@@ -10,9 +10,10 @@ const usuario = ref(useUsuario())
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
       <div class="col-md-3 mb-md-0">
         <RouterLink class="nav-link d-inline-flex link-body-emphasis text-decoration-none" to="/">
-          <span class="material-symbols-outlined" style="color:#198754; font-size: xx-large;">
+          <!-- <span class="material-symbols-outlined" style="color:#198754; font-size: xx-large;">
             celebration
-          </span>
+          </span> -->
+          <img src="/FiestAppIcon.png" style="width: 85%; height: auto;">
         </RouterLink>
       </div>
 
@@ -64,7 +65,8 @@ const usuario = ref(useUsuario())
         </li>
       </ul>
       <div class="col-md-3 text-end">
-        <button type="button" @click="usuario.cerrarsesion()" class="btn btn-outline-success me-2">Cerrar Sesión</button>
+        <button type="button" @click="usuario.cerrarsesion()" class="btn btn-outline-success me-2">Cerrar
+          Sesión</button>
       </div>
     </header>
   </div>
@@ -96,4 +98,3 @@ const usuario = ref(useUsuario())
   color: #1987549f;
 }
 </style>
-

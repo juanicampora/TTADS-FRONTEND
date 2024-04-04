@@ -5,6 +5,8 @@ import { useRouter } from 'vue-router'
 
 import { useAlerta } from '@/stores/alerta'
 
+import { useEspera } from '@/stores/espera'
+
 export const useUsuario = defineStore('usuario', () => {
   const router = useRouter()
   const tipo = ref('')
@@ -12,15 +14,14 @@ export const useUsuario = defineStore('usuario', () => {
   const name = ref('')
   const mail = ref('')
   const logueado = ref(false)
-  const esperaUsuario = ref(false)
   const cerrarsesion = () => {
-    esperaUsuario.value = true
     const alerta = useAlerta()
+    const espera = useEspera()
+    espera.activar()
     axios({
       method: 'put',
       url: `https://fiestaappapi.onrender.com/api/usuarios/logout/${uid.value}`
     }).then((response) => {
-      console.log('Sesión cerrada:', response.data.message);
       alerta.activar('Sesión cerrada', 'success')
       router.push('/')
       tipo.value = ''
@@ -28,13 +29,13 @@ export const useUsuario = defineStore('usuario', () => {
       name.value = ''
       mail.value = ''
       logueado.value = false
-      esperaUsuario.value = false
+      espera.desactivar()
     }).catch((error) => {
       console.log('Error al cerrar sesión:', error.response.data.message);
       alerta.activar('Error al cerrar sesión', 'danger')
       router.push('/error')
-      esperaUsuario.value = false
+      espera.desactivar()
     })
 }
-  return { tipo, uid, name, mail, logueado, esperaUsuario, cerrarsesion}
+  return { tipo, uid, name, mail, logueado, cerrarsesion}
 })
