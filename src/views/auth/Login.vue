@@ -49,7 +49,6 @@ const loguear = async () => {
           "mail": usuario.mail
         }
       }).then((data) => {
-        console.log(data)
         usuario.tipo = data.data.data.tipo;
         usuario.logueado = true;
         espera.desactivar();
@@ -84,6 +83,7 @@ const loguear = async () => {
   <div class="login-page">
     <div class="background-container"></div>
     <div class="form">
+      <div class="logo"><img src="/FiestApp.png"></div>
       <div class="login-form">
         <button id="botonLogin" @click="loguear"><img :src="GoogleImage"
             style="height: 50px; width: 50px; background-color: white ; margin-right: 10px;">Ingresar con
@@ -94,6 +94,10 @@ const loguear = async () => {
 </template>
 
 <style scoped>
+.logo {
+  margin-bottom: 20px;
+}
+
 .background-container {
   position: absolute;
   top: 0;
