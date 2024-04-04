@@ -53,7 +53,7 @@ const getData = async () => {
   try {
     espera.activar();
     claseEspera.value = 'disable-clicks';
-    const { data } = await axios.get('http://localhost:3000/api/canciones');
+    const { data } = await axios.get('https://fiestaappapi.onrender.com/api/canciones');
     canciones.value = data.data;
     espera.desactivar();
     claseEspera.value = '';
