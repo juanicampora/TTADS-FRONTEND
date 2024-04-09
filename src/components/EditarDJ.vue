@@ -5,6 +5,9 @@ import { ref } from 'vue';
 const props = defineProps(['djEditar']);
 const emit = defineEmits(['getData', 'cerrarEditor'])
 
+import { useEspera } from '@/stores/espera'
+const espera = useEspera()
+
 import { useAlerta } from '@/stores/alerta'
 const alerta = useAlerta()
 
@@ -29,12 +32,15 @@ else {
 };
 
 const eliminarIngresado = () => {
+  espera.activar();
   axios({
     method: 'delete',
     url: `https://fiestaappapi.onrender.com/api/djs/${props.djEditar.id}`,
   }).then(() => {
+    espera.desactivar();
     alerta.activar('DJ eliminado', 'success')
   }).catch((error) => {
+    espera.desactivar();
     alerta.activar(error.message, 'danger')
   });
   instagramIngresado.value = '';
@@ -49,6 +55,7 @@ const eliminarIngresado = () => {
 
 const guardarIngresado = () => {
   try {
+    espera.activar();
     axios({
       method: metodo,
       url: url,
@@ -62,12 +69,14 @@ const guardarIngresado = () => {
     instagramIngresado.value = '';
     nombreIngresado.value = '';
     numeroIngresado.value = '';
+    espera.desactivar();
     alerta.activar('Datos del DJ guardados', 'success')
     setTimeout(() => {
       emit('getData');
       emit('cerrarEditor');
     }, 1000);
   } catch (error) {
+    espera.desactivar();
     alerta.activar(error.response.data.message, 'danger')
   }
 

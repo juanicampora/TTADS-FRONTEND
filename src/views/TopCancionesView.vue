@@ -66,16 +66,17 @@ const format = (fechaElegida) => {
       <h1 class="text-center display-5 fw-bold text-body-emphasis mb-3">Top Canciones</h1>
       <div class="mx-4">
         <div class="text-center mb-4">
-          <div class="d-inline-block rounded" style="width: 435px;">
-            <VueDatePicker dark placeholder="Seleccione una fecha para mostrar su top canciones" v-model="fechaElegida"
-              model-type="yyyy.MM.dd" :allowed-dates="fechasPermitidas" :enable-time-picker="false" position="center"
-              :model-value="fechaElegida" @update:model-value="getTopCanciones" :format="format" />
+          <div class="d-inline-block rounded">
+            <VueDatePicker dark placeholder="Seleccione una fecha" v-model="fechaElegida" model-type="yyyy.MM.dd"
+              :allowed-dates="fechasPermitidas" :enable-time-picker="false" position="center"
+              :model-value="fechaElegida" @update:model-value="getTopCanciones" :format="format"
+              style="width: 300px;" />
           </div>
         </div>
 
         <table v-if="tablaLista" class="table">
           <thead>
-            <th>Nombre de la Cancion</th>
+            <th>Nombre</th>
             <th>Autor</th>
             <th>Puntaje</th>
           </thead>

@@ -15,15 +15,17 @@ const alerta = useAlerta()
 const canciones = ref([]);
 const estadoEditor = ref(false);
 const cancionEditar = ref(0);
+const puntajeCancionEditar = ref(0);
 const idCancionDjEditar = ref('');
 const nombreIngresado = ref('');
 const autorIngresado = ref('');
 const claseEspera = ref('');
 const habilitado = ref(false);
 
-const activarEditor = (id, cancionTabla) => {
+const activarEditor = (id, cancionTabla, puntajeCancion) => {
   estadoEditor.value = false;
   cancionEditar.value = cancionTabla;
+  puntajeCancionEditar.value = puntajeCancion;
   idCancionDjEditar.value = id;
   setTimeout(() => {
     estadoEditor.value = true;
@@ -119,36 +121,38 @@ getData();
 <template>
   <div>
     <EditarCancion v-if="estadoEditor" :idCancionDj='idCancionDjEditar' tipoEditar='canciondj'
-      :cancionEditar="cancionEditar" tipoUsuario="Dj" @cerrarEditor="estadoEditor = false" @getData="getData" />
+      :cancionEditar="cancionEditar" :puntajeCancion="puntajeCancionEditar" tipoUsuario="Dj"
+      @cerrarEditor="estadoEditor = false" @getData="getData" />
   </div>
   <div :class="claseEspera">
     <div class="container py-4 rounded mt-3" style="background-color: gray;">
       <h1 class="text-center display-5 fw-bold text-body-emphasis mb-3">Tus canciones de la noche actual</h1>
       <div class="table-responsive mx-4" v-if="habilitado">
         <table class="table">
-          <thead>
-            <th>Nombre de la Cancion</th>
+          <thead style="text-align: center;">
+            <th>Nombre</th>
             <th>Autor</th>
             <th>Puntaje</th>
-            <th class="d-flex justify-content-end">Accion</th>
+            <th>Accion</th>
           </thead>
           <tbody>
-            <tr class="table-success">
+            <tr class="table-success" style="vertical-align: middle;">
               <td><input type="text" class="form-control" placeholder="Nombre Cancion Nueva" v-model="nombreIngresado">
               </td>
               <td><input type="text" class="form-control" placeholder="Autor Cancion Nueva" v-model="autorIngresado">
               </td>
-              <td></td>
-              <td class="d-flex justify-content-end"><button class=" btn btn-success" style="width:82px;"
-                  @click="guardarCancion"><i class="bi bi-plus-lg"></i></button></td>
+              <td>0</td>
+              <td style="width: 90px;"><button class=" btn btn-success" style="width:82px;" @click="guardarCancion"><i
+                    class="bi bi-plus-lg"></i></button></td>
             </tr>
-            <tr v-for="canciondj in canciones" :key="canciondj.id">
+            <tr v-for="canciondj in canciones" :key="canciondj.id" style="vertical-align: middle;">
               <td>{{ canciondj.cancion.nombre }}</td>
               <td>{{ canciondj.cancion.autor }}</td>
               <td>{{ canciondj.puntaje }}</td>
-              <td class="d-flex justify-content-end">
+              <td>
                 <div class="btn-group">
-                  <button class="btn btn-warning" @click="activarEditor(canciondj.id, canciondj.cancion)"><i
+                  <button class="btn btn-warning"
+                    @click="activarEditor(canciondj.id, canciondj.cancion, canciondj.puntaje)"><i
                       class="bi bi-pencil-square"></i></button>
                   <button class="btn btn-danger" @click="eliminarCancion(canciondj.id)"><i
                       class="bi bi-trash3"></i></button>

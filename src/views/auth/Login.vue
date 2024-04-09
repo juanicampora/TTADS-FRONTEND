@@ -81,7 +81,7 @@ const loguear = async () => {
 
 <template>
   <div class="login-page">
-    <div class="background-container"></div>
+    <img class="background-container" src="/ImagenFiesta.jpg">
     <div class="form">
       <div class="logo"><img src="/FiestApp.png"></div>
       <div class="login-form">
@@ -104,7 +104,6 @@ const loguear = async () => {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('imagenfiesta.jpg');
   background-size: cover;
   background-position: center;
   filter: blur(5px);

@@ -2,7 +2,13 @@
 import axios from 'axios'
 import { ref } from 'vue';
 
-const props = defineProps(['idCancionDj', 'tipoEditar', 'cancionEditar', 'tipoUsuario']);
+import { useEspera } from '@/stores/espera'
+const espera = useEspera()
+
+import { useAlerta } from '@/stores/alerta'
+const alerta = useAlerta()
+
+const props = defineProps(['idCancionDj', 'tipoEditar', 'cancionEditar', 'puntajeCancion', 'tipoUsuario']);
 const emit = defineEmits(['getData', 'cerrarEditor'])
 
 const nombreIngresado = ref('');
@@ -12,9 +18,10 @@ const urlElegida = ref('');
 
 nombreIngresado.value = props.cancionEditar.nombre;
 autorIngresado.value = props.cancionEditar.autor;
-puntajeIngresado.value = props.cancionEditar.puntaje;
+puntajeIngresado.value = props.puntajeCancion;
 
 const guardarIngresado = () => {
+  espera.activar();
   if (props.tipoEditar == 'cancion') {
     urlElegida.value = `https://fiestaappapi.onrender.com/api/canciones/${props.cancionEditar.id}`;
   } else if (props.tipoEditar == 'canciondj') {
@@ -28,7 +35,14 @@ const guardarIngresado = () => {
       "autor": autorIngresado.value,
       "puntaje": puntajeIngresado.value
     }
-  });
+  })
+    .then(() => {
+      alerta.activar('Cancion guardada', 'success')
+    })
+    .catch((error) => {
+      alerta.activar(error.message, 'danger')
+    });
+  espera.desactivar();
   nombreIngresado.value = '';
   autorIngresado.value = '';
   puntajeIngresado.value = '';

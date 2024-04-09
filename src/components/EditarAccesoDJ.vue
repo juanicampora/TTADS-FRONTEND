@@ -33,6 +33,7 @@ const getMailDj = () => {
 }
 
 const guardarIngresado = () => {
+  espera.activar();
   axios({
     method: 'post',
     url: 'https://fiestaappapi.onrender.com/api/usuarios/register',
@@ -41,8 +42,10 @@ const guardarIngresado = () => {
       "idDj": props.djEditar.id
     }
   }).then((response) => {
+    espera.desactivar();
     alerta.activar('Mail de acceso guardado', 'success')
   }).catch((error) => {
+    espera.desactivar();
     alerta.activar(error.message, 'danger')
   })
   emailAcceso.value = '';

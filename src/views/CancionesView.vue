@@ -76,27 +76,27 @@ getData();
       <h1 class="text-center display-5 fw-bold text-body-emphasis mb-3">Listado de todas las Canciones</h1>
       <div class="table-responsive mx-4">
         <table class="table">
-          <thead>
-            <th>Nombre de la Cancion</th>
+          <thead style="text-align: center;">
+            <th>Nombre</th>
             <th>Autor</th>
             <th>Puntaje</th>
-            <th class="d-flex justify-content-end">Accion</th>
+            <th>Acción</th>
           </thead>
           <tbody>
-            <tr class="table-success">
+            <tr class="table-success" style="vertical-align: middle;">
               <td><input type="text" class="form-control" placeholder="Nombre Cancion Nueva" v-model="nombreIngresado">
               </td>
               <td><input type="text" class="form-control" placeholder="Autor Cancion Nueva" v-model="autorIngresado">
               </td>
-              <td></td>
-              <td class="d-flex justify-content-end"><button class=" btn btn-success" style="width:82px;"
-                  @click="guardarCancion"><i class="bi bi-plus-lg"></i></button></td>
+              <td>0</td>
+              <td style="width:90px;"><button class=" btn btn-success" style="width:82px;" @click="guardarCancion"><i
+                    class="bi bi-plus-lg"></i></button></td>
             </tr>
-            <tr v-for="cancion in canciones" :key="cancion.id">
+            <tr v-for="cancion in canciones" :key="cancion.id" style="vertical-align: middle;">
               <td>{{ cancion.nombre }}</td>
               <td>{{ cancion.autor }}</td>
               <td>{{ cancion.puntajeTotal }}</td>
-              <td class="d-flex justify-content-end">
+              <td>
                 <div class="btn-group">
                   <button class="btn btn-warning" @click="activarEditor(cancion)"><i
                       class="bi bi-pencil-square"></i></button>
